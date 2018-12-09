@@ -225,7 +225,13 @@ for k in edgedic_fol:
 		continue
 
 	keylist = sorted(actdic_fol[k].keys())
+	lastd = 1000
 	for d in keylist:
+		if lastd + 1 < d:
+			for i in range(lastd+1, d):
+				z2.append(i)
+				w2.append(0)
+		lastd = d		
 		z2.append(d)
 		w2.append(actdic_fol[k][d])
 
@@ -252,7 +258,13 @@ for k in edgedic_fol:
 		continue
 
 	keylist = sorted(postdic_fol[k].keys())
+	lastd = 1000
 	for d in keylist:
+		if lastd + 1 < d:
+			for i in range(lastd+1, d):
+				z1.append(i)
+				w1.append(0)
+		lastd = d		
 		z1.append(d)
 		w1.append(postdic_fol[k][d])
 
@@ -302,7 +314,13 @@ for k in edgedic_fan:
 		continue
 
 	keylist = sorted(actdic_fan[k].keys())
+	lastd = 1000
 	for d in keylist:
+		if lastd + 1 < d:
+			for i in range(lastd+1, d):
+				z2.append(i)
+				w2.append(0)
+		lastd = d
 		z2.append(d)
 		w2.append(actdic_fan[k][d])
 
@@ -329,7 +347,13 @@ for k in edgedic_fan:
 		continue
 
 	keylist = sorted(postdic_fan[k].keys())
+	lastd = 1000
 	for d in keylist:
+		if lastd + 1 < d:
+			for i in range(lastd+1, d):
+				z1.append(i)
+				w1.append(0)
+		lastd = d		
 		z1.append(d)
 		w1.append(postdic_fan[k][d])
 
