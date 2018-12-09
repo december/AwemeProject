@@ -72,4 +72,4 @@ fw = open('../aweme_post_common_day_sample_pol.text', 'w')
 for line in result:
 	fw.write(line)
 fw.close()
-‘’‘
+'''
