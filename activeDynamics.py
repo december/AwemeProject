@@ -23,6 +23,7 @@ prefix = '../../../Bytedance/Data/aweme_'
 suffix1 = '_follow_day_sample.text'
 suffix2 = '_fans_day_sample.text'
 
+print 'Begin to read activeness.'
 fr = open(prefix+'active'+suffix1, 'r')
 data = fr.readlines()
 data.sort()
@@ -75,6 +76,7 @@ for i in range(n):
 			else:
 				actdic_fan[name][j] = 1
 
+print 'Begin to read edge dynamics.'
 fr = open(prefix+'edge'+suffix1, 'r')
 data = fr.readlines()
 data.sort()
@@ -92,6 +94,8 @@ for i in range(n):
 		edgedic_fol[name] = {}
 		social = int(temp[3]) - int(temp[4])
 		content = int(temp[5]) - int(temp[6])
+		if not startdic_fol.has_key(name):
+			continue
 		start = startdic_fol[name]
 		current = datetime.datetime.strptime(temp[2], '%Y%m%d')
 		if not userdic_fol.has_key(name):
@@ -128,6 +132,8 @@ for i in range(n):
 		edgedic_fan[name] = {}
 		social = int(temp[3]) - int(temp[4])
 		content = int(temp[5]) - int(temp[6])
+		if not startdic_fan.has_key(name):
+			continue
 		start = startdic_fan[name]
 		current = datetime.datetime.strptime(temp[2], '%Y%m%d')
 		if not userdic_fan.has_key(name):
@@ -147,6 +153,7 @@ for i in range(n):
 		delta = (current - start).days					
 		edgedic_fan[name][delta] = tl 
 
+print 'Begin to read posting dynamics.'
 fr = open(prefix+'post'+suffix1, 'r')
 data = fr.readlines()
 data.sort()
@@ -157,6 +164,8 @@ for i in range(n):
 	temp = data[i].split('\t')
 	name = temp[0] + ':' + temp[1]
 	if not postdic_fol.has_key(name):
+		if not startdic_fol.has_key(name):
+			continue
 		start = startdic_fol[name]
 		current = datetime.datetime.strptime(temp[2], '%Y%m%d')
 		postdic_fol[name] = {}
@@ -177,6 +186,8 @@ for i in range(n):
 	temp = data[i].split('\t')
 	name = temp[0] + ':' + temp[1]
 	if not postdic_fan.has_key(name):
+		if not startdic_fan.has_key(name):
+			continue
 		start = startdic_fan[name]
 		current = datetime.datetime.strptime(temp[2], '%Y%m%d')
 		postdic_fan[name] = {}

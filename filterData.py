@@ -14,7 +14,7 @@ def returnType(a, b):
 		return 1
 	# Others
 	return -1
-
+'''
 fr = open('../aweme_edge_common_day_sample.text', 'r')
 data = fr.readlines()
 data.sort()
@@ -53,7 +53,7 @@ fw = open('../aweme_active_common_day_sample_pol.text', 'w')
 for line in result:
 	fw.write(line)
 fw.close()
-
+'''
 fr = open('../aweme_post_common_day_sample.text', 'r')
 data = fr.readlines()
 data.sort()
