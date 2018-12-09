@@ -53,7 +53,7 @@ fw = open('../aweme_active_common_day_sample_pol.text', 'w')
 for line in result:
 	fw.write(line)
 fw.close()
-'''
+
 fr = open('../aweme_post_common_day_sample.text', 'r')
 data = fr.readlines()
 data.sort()
@@ -72,4 +72,19 @@ fw = open('../aweme_post_common_day_sample_pol.text', 'w')
 for line in result:
 	fw.write(line)
 fw.close()
+'''
 
+result = list()
+with open('../aweme_active_common_day_sample.text', 'r') as file:
+	for line in file:
+		temp = line.split('\t')
+		cluster = returnType(temp[1], temp[2])
+		if cluster < 0:
+			continue
+		unit = temp[0] + '\t' + str(cluster) + '\t' + temp[3] + '\n'
+		result.append(unit)
+
+fw = open('../aweme_active_common_day_sample_pol.text', 'w')
+for line in result:
+	fw.write(line)
+fw.close()
