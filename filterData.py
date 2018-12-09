@@ -14,7 +14,7 @@ def returnType(a, b):
 		return 1
 	# Others
 	return -1
-'''
+
 fr = open('../aweme_edge_common_day_sample.text', 'r')
 data = fr.readlines()
 data.sort()
@@ -23,10 +23,10 @@ result = list()
 n = len(data)
 for i in range(n):
 	temp = data[i].split('\t')
-	cluster = returnType(temp[-2], temp[-1])
+	cluster = returnType(temp[1], temp[2])
 	if cluster < 0:
 		continue
-	line = temp[0] + '\t' + str(cluster) + '\t' + temp[1] + '\t' + temp[2] + '\t' + temp[3] + '\t' + temp[4] + '\t' + temp[5] + '\n'
+	line = temp[0] + '\t' + str(cluster) + '\t' + temp[3] + '\t' + temp[4] + '\t' + temp[5] + '\t' + temp[6] + '\t' + temp[7] + '\n'
 	result.append(line)
 
 fw = open('../aweme_edge_common_day_sample_pol.text', 'w')
@@ -34,7 +34,7 @@ for line in result:
 	fw.write(line)
 fw.close()
 
-
+'''
 fr = open('../aweme_active_common_day_sample.text', 'r')
 data = fr.readlines()
 data.sort()
@@ -43,10 +43,10 @@ result = list()
 n = len(data)
 for i in range(n):
 	temp = data[i].split('\t')
-	cluster = returnType(temp[-2], temp[-1])
+	cluster = returnType(temp[1], temp[2])
 	if cluster < 0:
 		continue
-	line = temp[0] + '\t' + str(cluster) + '\t' + temp[1] + '\n'
+	line = temp[0] + '\t' + str(cluster) + '\t' + temp[3] + '\n'
 	result.append(line)
 
 fw = open('../aweme_active_common_day_sample_pol.text', 'w')
@@ -62,10 +62,10 @@ result = list()
 n = len(data)
 for i in range(n):
 	temp = data[i].split('\t')
-	cluster = returnType(temp[-2], temp[-1])
+	cluster = returnType(temp[1], temp[2])
 	if cluster < 0:
 		continue
-	line = temp[0] + '\t' + str(cluster) + '\t' + temp[1] + '\t' + temp[2] + '\n'
+	line = temp[0] + '\t' + str(cluster) + '\t' + temp[3] + '\t' + temp[4] + '\n'
 	result.append(line)
 
 fw = open('../aweme_post_common_day_sample_pol.text', 'w')
