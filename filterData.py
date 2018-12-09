@@ -14,8 +14,8 @@ def returnType(a, b):
 		return 1
 	# Others
 	return -1
-'''
-fr = open('../aweme_edge_common_day_sample.text', 'r')
+
+fr = open('../aweme_edge_common_day_sample_fans.text', 'r')
 data = fr.readlines()
 data.sort()
 fr.close()
@@ -29,12 +29,12 @@ for i in range(n):
 	line = temp[0] + '\t' + str(cluster) + '\t' + temp[3] + '\t' + temp[4] + '\t' + temp[5] + '\t' + temp[6] + '\t' + temp[7] + '\n'
 	result.append(line)
 
-fw = open('../aweme_edge_common_day_sample_pol.text', 'w')
+fw = open('../aweme_edge_common_day_sample_fans_pol.text', 'w')
 for line in result:
 	fw.write(line)
 fw.close()
 
-
+'''
 fr = open('../aweme_active_common_day_sample.text', 'r')
 data = fr.readlines()
 data.sort()
@@ -72,7 +72,6 @@ fw = open('../aweme_post_common_day_sample_pol.text', 'w')
 for line in result:
 	fw.write(line)
 fw.close()
-'''
 
 result = list()
 with open('../aweme_active_common_day_sample.text', 'r') as file:
@@ -88,3 +87,4 @@ fw = open('../aweme_active_common_day_sample_pol.text', 'w')
 for line in result:
 	fw.write(line)
 fw.close()
+'''
