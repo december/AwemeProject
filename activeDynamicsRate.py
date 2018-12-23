@@ -127,8 +127,8 @@ for i in range(n):
 		delta = (current - start).days		
 		edgedic_fol[name][delta] = tl 
 	else:
-		social += int(temp[3]) - int(temp[4])
-		content += int(temp[5]) - int(temp[6])
+		social = int(temp[3]) - int(temp[4])
+		content = int(temp[5]) - int(temp[6])
 		tl = list()
 		tl.append(social)
 		tl.append(content)
@@ -163,8 +163,8 @@ for i in range(n):
 		delta = (current - start).days		
 		edgedic_fan[name][delta] = tl 
 	else:
-		social += int(temp[3]) - int(temp[4])
-		content += int(temp[5]) - int(temp[6])
+		social = int(temp[3]) - int(temp[4])
+		content = int(temp[5]) - int(temp[6])
 		tl = list()
 		tl.append(social)
 		tl.append(content)
@@ -191,24 +191,11 @@ for i in range(n):
 		current = datetime.datetime.strptime(temp[2], '%Y%m%d')
 		postdic_fol[name] = {}
 		delta = (current - start).days
-		if int(temp[3]) == 0:
-			continue
-		for j in range(delta, delta+window):
-			if j > enddic_fol[name]:
-				break
-			postdic_fol[name][delta] = 1
+		postdic_fol[name][delta] = int(temp[3])
 	else:
 		current = datetime.datetime.strptime(temp[2], '%Y%m%d')		
-		delta = (current - start).days
-		if int(temp[3]) == 0:
-			continue
-		for j in range(delta, delta+window):
-			if j > enddic_fol[name]:
-				break
-			if postdic_fol[name].has_key(j):
-				postdic_fol[name][j] += 1
-			else:
-				postdic_fol[name][j] = 1
+		delta = (current - start).days		
+		postdic_fol[name][delta] = int(temp[3])
 
 fr = open(prefix+'post'+suffix2, 'r')
 data = fr.readlines()
@@ -228,24 +215,11 @@ for i in range(n):
 		current = datetime.datetime.strptime(temp[2], '%Y%m%d')
 		postdic_fan[name] = {}
 		delta = (current - start).days		
-		if int(temp[3]) == 0:
-			continue
-		for j in range(delta, delta+window):
-			if j > enddic_fan[name]:
-				break
-			postdic_fan[name][delta] = 1
+		postdic_fan[name][delta] = int(temp[3])
 	else:
 		current = datetime.datetime.strptime(temp[2], '%Y%m%d')		
 		delta = (current - start).days		
-		if int(temp[3]) == 0:
-			continue
-		for j in range(delta, delta+window):
-			if j > enddic_fan[name]:
-				break
-			if postdic_fan[name].has_key(j):
-				postdic_fan[name][j] += 1
-			else:
-				postdic_fan[name][j] = 1				
+		postdic_fan[name][delta] = int(temp[3])				
 
 print 'Begin to draw followers.'
 for k in edgedic_fol:
@@ -253,6 +227,8 @@ for k in edgedic_fol:
 	x = list()
 	y1 = list()
 	y2 = list()
+	logy1 = list()
+	logy2 = list()
 	#Post
 	z1 = list()
 	w1 = list()
@@ -261,14 +237,38 @@ for k in edgedic_fol:
 	w2 = list()
 
 	keylist = sorted(edgedic_fol[k].keys())
+	lastd = 1000
 	for d in keylist:
+		if lastd + 1 < d:
+			for i in range(lastd+1, d):
+				x.append(i)
+				y1.append(0)
+				y2.append(0)
+				logy1.append(0)
+				logy2.append(0)
+		lastd = d		
 		x.append(d)
 		y1.append(edgedic_fol[k][d][0])
 		y2.append(edgedic_fol[k][d][1])
+		if edgedic_fol[k][d][0] > 0:
+			logy1.append(np.log2(edgedic_fol[k][d][0]+1))
+		if edgedic_fol[k][d][0] == 0:
+			logy1.append(0)
+		if edgedic_fol[k][d][0] < 0:
+			logy1.append(-np.log2(-edgedic_fol[k][d][0]+1))
+		if edgedic_fol[k][d][1] > 0:
+			logy2.append(np.log2(edgedic_fol[k][d][1]+1))
+		if edgedic_fol[k][d][1] == 0:
+			logy2.append(0)
+		if edgedic_fol[k][d][1] < 0:
+			logy2.append(-np.log2(-edgedic_fol[k][d][1]+1))		
+
 
 	x = np.array(x)
 	y1 = np.array(y1)
 	y2 = np.array(y2)	
+	logy1 = np.array(logy1)
+	logy2 = np.array(logy2)
 
 	if not actdic_fol.has_key(k):
 		continue
@@ -299,9 +299,23 @@ for k in edgedic_fol:
 	ax2.plot(z2, w2, marker='.', c='r', label='Active')
 	ax2.set_ylabel('Activeness')
 	plt.legend(loc=2)
-	plt.savefig('../../../Bytedance/Figs/active_dynamics/fol_act/'+k+'.png')
-	ax1.set_yscale('log', nonposy='clip')
-	plt.savefig('../../../Bytedance/Figs/active_dynamics/fol_act/'+k+'_log.png')
+	plt.savefig('../../../Bytedance/Figs/active_dynamics_rate/fol_act/'+k+'.png')
+	plt.cla()
+	plt.close(fig)
+
+	fig, ax1 = plt.subplots()
+	ax2 = ax1.twinx()
+	plt.grid()
+	plt.title(userdic_fol[k])
+	ax1.plot(x, logy1, marker='.', c='b', label='Social')
+	ax1.plot(x, logy2, marker='.', c='g', label='Content')
+	ax1.set_xlabel('Days')
+	ax1.set_ylabel('LogPop')
+	plt.legend(loc=1)
+	ax2.plot(z2, w2, marker='.', c='r', label='Active')
+	ax2.set_ylabel('Activeness')
+	plt.legend(loc=2)
+	plt.savefig('../../../Bytedance/Figs/active_dynamics_rate/fol_act/'+k+'_log.png')
 	plt.cla()
 	plt.close(fig)
 
@@ -334,9 +348,23 @@ for k in edgedic_fol:
 	ax2.plot(z1, w1, marker='.', c='r', label='Post')
 	ax2.set_ylabel('Posts')
 	plt.legend(loc=2)
-	plt.savefig('../../../Bytedance/Figs/active_dynamics/fol_post/'+k+'.png')
-	ax1.set_yscale('log', nonposy='clip')
-	plt.savefig('../../../Bytedance/Figs/active_dynamics/fol_post/'+k+'_log.png')	
+	plt.savefig('../../../Bytedance/Figs/active_dynamics_rate/fol_post/'+k+'.png')
+	plt.cla()
+	plt.close(fig)
+
+	fig, ax1 = plt.subplots()
+	ax2 = ax1.twinx()
+	plt.grid()
+	plt.title(userdic_fol[k])
+	ax1.plot(x, logy1, marker='.', c='b', label='Social')
+	ax1.plot(x, logy2, marker='.', c='g', label='Content')
+	ax1.set_xlabel('Days')
+	ax1.set_ylabel('LogPop')
+	plt.legend(loc=1)
+	ax2.plot(z1, w1, marker='.', c='r', label='Post')
+	ax2.set_ylabel('Posts')
+	plt.legend(loc=2)
+	plt.savefig('../../../Bytedance/Figs/active_dynamics_rate/fol_post/'+k+'_log.png')	
 	plt.cla()
 	plt.close(fig)
 
@@ -346,6 +374,8 @@ for k in edgedic_fan:
 	x = list()
 	y1 = list()
 	y2 = list()
+	logy1 = list()
+	logy2 = list()
 	#Post
 	z1 = list()
 	w1 = list()
@@ -354,14 +384,37 @@ for k in edgedic_fan:
 	w2 = list()
 
 	keylist = sorted(edgedic_fan[k].keys())
+	lastd = 1000
 	for d in keylist:
+		if lastd + 1 < d:
+			for i in range(lastd+1, d):
+				x.append(i)
+				y1.append(0)
+				y2.append(0)
+				logy1.append(0)
+				logy2.append(0)				
+		lastd = d
 		x.append(d)
 		y1.append(edgedic_fan[k][d][0])
 		y2.append(edgedic_fan[k][d][1])
+		if edgedic_fan[k][d][0] > 0:
+			logy1.append(np.log2(edgedic_fan[k][d][0]+1))
+		if edgedic_fan[k][d][0] == 0:
+			logy1.append(0)
+		if edgedic_fan[k][d][0] < 0:
+			logy1.append(-np.log2(-edgedic_fan[k][d][0]+1))
+		if edgedic_fan[k][d][1] > 0:
+			logy2.append(np.log2(edgedic_fan[k][d][1]+1))
+		if edgedic_fan[k][d][1] == 0:
+			logy2.append(0)
+		if edgedic_fan[k][d][1] < 0:
+			logy2.append(-np.log2(-edgedic_fan[k][d][1]+1))		
 
 	x = np.array(x)
 	y1 = np.array(y1)
 	y2 = np.array(y2)	
+	logy1 = np.array(logy1)
+	logy2 = np.array(logy2)
 
 	if not actdic_fan.has_key(k):
 		continue
@@ -392,9 +445,23 @@ for k in edgedic_fan:
 	ax2.plot(z2, w2, marker='.', c='r', label='Active')
 	ax2.set_ylabel('Activeness')
 	plt.legend(loc=2)
-	plt.savefig('../../../Bytedance/Figs/active_dynamics/fans_act/'+k+'.png')
-	ax1.set_yscale('log', nonposy='clip')
-	plt.savefig('../../../Bytedance/Figs/active_dynamics/fans_act/'+k+'_log.png')	
+	plt.savefig('../../../Bytedance/Figs/active_dynamics_rate/fans_act/'+k+'.png')
+	plt.cla()
+	plt.close(fig)
+
+	fig, ax1 = plt.subplots()
+	ax2 = ax1.twinx()
+	plt.grid()
+	plt.title(userdic_fan[k])
+	ax1.plot(x, logy1, marker='.', c='b', label='Social')
+	ax1.plot(x, logy2, marker='.', c='g', label='Content')
+	ax1.set_xlabel('Days')
+	ax1.set_ylabel('LogPop')
+	plt.legend(loc=1)
+	ax2.plot(z2, w2, marker='.', c='r', label='Active')
+	ax2.set_ylabel('Activeness')
+	plt.legend(loc=2)
+	plt.savefig('../../../Bytedance/Figs/active_dynamics_rate/fans_act/'+k+'_log.png')	
 	plt.cla()
 	plt.close(fig)
 
@@ -427,8 +494,22 @@ for k in edgedic_fan:
 	ax2.plot(z1, w1, marker='.', c='r', label='Post')
 	ax2.set_ylabel('Posts')
 	plt.legend(loc=2)
-	plt.savefig('../../../Bytedance/Figs/active_dynamics/fans_post/'+k+'.png')
-	ax1.set_yscale('log', nonposy='clip')
-	plt.savefig('../../../Bytedance/Figs/active_dynamics/fans_post/'+k+'_log.png')	
+	plt.savefig('../../../Bytedance/Figs/active_dynamics_rate/fans_post/'+k+'.png')
+	plt.cla()
+	plt.close(fig)
+
+	fig, ax1 = plt.subplots()
+	ax2 = ax1.twinx()
+	plt.grid()
+	plt.title(userdic_fan[k])
+	ax1.plot(x, logy1, marker='.', c='b', label='Social')
+	ax1.plot(x, logy2, marker='.', c='g', label='Content')
+	ax1.set_xlabel('Days')
+	ax1.set_ylabel('LogPop')
+	plt.legend(loc=1)
+	ax2.plot(z1, w1, marker='.', c='r', label='Post')
+	ax2.set_ylabel('Posts')
+	plt.legend(loc=2)
+	plt.savefig('../../../Bytedance/Figs/active_dynamics_rate/fans_post/'+k+'_log.png')	
 	plt.cla()
 	plt.close(fig)
