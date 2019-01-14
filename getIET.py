@@ -24,7 +24,7 @@ for i in range(n-1):
 		after = datetime.datetime.strptime(newtemp[1], '%Y%m%d')
 		ietdic[data[i][:-1]] = str((after - before).days)
 ietkey = sorted(ietdic.keys())
-print 'Finished acitve part.'
+print('Finished acitve part.')
 
 foldic = {}
 fr = open('../../../data/aweme_edge_follow_day_'+suffix+'.text', 'r')
@@ -48,7 +48,7 @@ for i in range(n):
 	foldic[temp[0]+'\t'+temp[1]] = str(social) + '\t' + str(content)
 	lastid = temp[0]
 folkey = sorted(foldic.keys())
-print 'Finished follow part.'
+print('Finished follow part.')
 
 fandic = {}
 fr = open('../../../data/aweme_edge_fans_day_'+suffix+'.text', 'r')
@@ -72,7 +72,7 @@ for i in range(n):
 	fandic[temp[0]+'\t'+temp[1]] = str(social) + '\t' + str(content)
 	lastid = temp[0]		
 fankey = sorted(fandic.keys())
-print 'Finished fans part.'
+print('Finished fans part.')
 
 posdic = {}
 fr = open('../../../data/aweme_post_day_'+suffix+'.text', 'r')
@@ -93,7 +93,7 @@ for i in range(n):
 	posdic[temp[0]+'\t'+temp[1]] = str(posted)
 	lastid = temp[0]
 poskey = sorted(posdic.keys())
-print 'Finished post part.'
+print('Finished post part.')
 
 folpos = 0
 folend = len(folkey)
@@ -154,10 +154,10 @@ for key in ietkey:
 				break
 		if newid < curid:
 			pospos += 1			
-print 'Finished arranging part.'
+print('Finished arranging part.')
 
 fw = open('../../../data/aweme_active_iet_'+suffix+'.text', 'w')
 for key in ietkey:
 	fw.write(key+'\t'+ietdic[key]+'\n')
 fw.close()
-print 'Finished writing part.'
+print('Finished writing part.')
