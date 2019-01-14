@@ -15,6 +15,10 @@ lastid = ''
 for i in range(n-1):
 	temp = data[i][:-1].split('\t')
 	newtemp = data[i+1][:-1].split('\t')
+	if temp[1] == 'null\n' or temp[1] > '20180826':
+		continue
+	if newtemp[1] == 'null\n' or newtemp[1] > '20180826':
+		continue	
 	if newtemp[0] == temp[0]:
 		before = datetime.datetime.strptime(temp[1], '%Y%m%d')
 		after = datetime.datetime.strptime(newtemp[1], '%Y%m%d')
@@ -32,6 +36,8 @@ social = 0
 content = 0
 for i in range(n):
 	temp = data[i][:-1].split('\t')
+	if temp[1] == 'null\n' or temp[1] > '20180826':
+		continue	
 	if temp[0] == lastid:
 		social += int(temp[2]) - int(temp[3])
 		content += int(temp[4]) - int(temp[5])
@@ -53,6 +59,8 @@ social = 0
 content = 0
 for i in range(n):
 	temp = data[i][:-1].split('\t')
+	if temp[1] == 'null\n' or temp[1] > '20180826':
+		continue	
 	if temp[0] == lastid:
 		social += int(temp[2]) - int(temp[3])
 		content += int(temp[4]) - int(temp[5])
@@ -73,6 +81,8 @@ lastid = ''
 posted = 0
 for i in range(n):
 	temp = data[i][:-1].split('\t')
+	if temp[1] == 'null\n' or temp[1] > '20180826':
+		continue	
 	if temp[0] == lastid:
 		posted += int(temp[2])
 	else:
