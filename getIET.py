@@ -1,6 +1,6 @@
 import sys
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib as plt
 import datetime
 
 suffix = '10to50'
