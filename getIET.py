@@ -3,7 +3,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import datetime
 
-suffix = '50to100'
+suffix = '10to50'
+
+idset = set()
+fr = open('../../../data/overall_'+suffix+'.csv', 'r')
+data = fr.readlines()
+fr.close()
+n = len(data)
+for i in range(1, n):
+	temp = data[i][:-1].split(',')
+	idset.add(temp[0])
+print('Finished sample part.')	
 
 ietdic = {}
 fr = open('../../../data/aweme_active_day_'+suffix+'.text', 'r')
@@ -15,6 +25,8 @@ lastid = ''
 for i in range(n-1):
 	temp = data[i][:-1].split('\t')
 	newtemp = data[i+1][:-1].split('\t')
+	if not temp[0] in idset:
+		continue
 	if temp[1] == 'null\n' or temp[1] > '20180826':
 		continue
 	if newtemp[1] == 'null\n' or newtemp[1] > '20180826':
@@ -37,6 +49,8 @@ social = 0
 content = 0
 for i in range(n):
 	temp = data[i][:-1].split('\t')
+	if not temp[0] in idset:
+		continue	
 	if temp[1] == 'null\n' or temp[1] > '20180826':
 		continue	
 	if temp[0] == lastid:
@@ -61,6 +75,8 @@ social = 0
 content = 0
 for i in range(n):
 	temp = data[i][:-1].split('\t')
+	if not temp[0] in idset:
+		continue	
 	if temp[1] == 'null\n' or temp[1] > '20180826':
 		continue	
 	if temp[0] == lastid:
@@ -84,6 +100,8 @@ lastid = ''
 posted = 0
 for i in range(n):
 	temp = data[i][:-1].split('\t')
+	if not temp[0] in idset:
+		continue	
 	if temp[1] == 'null\n' or temp[1] > '20180826':
 		continue	
 	if temp[0] == lastid:
