@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import datetime
 
-suffix = '100to500'
+suffix = '50to100'
 
 ietdic = {}
 fr = open('../../../data/aweme_active_day_'+suffix+'.text', 'r')
