@@ -45,7 +45,7 @@ for i in range(n):
 		ietdic[data[i][:-1]] = str((after - before).days)
 	if newtemp[0] != temp[0] and temp[1] != '20180826':
 		before = datetime.datetime.strptime(temp[1], '%Y%m%d')
-		after = datetime.datetime.strptime(newtemp[1], '20180826')
+		after = datetime.datetime.strptime('20180826', '%Y%m%d')
 		ietdic[data[i][:-1]] = str((after - before).days)+'e'
 ietkey = sorted(ietdic.keys())
 print('Finished acitve part.')
