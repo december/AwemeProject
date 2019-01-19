@@ -3,8 +3,10 @@ import numpy as np
 import matplotlib as plt
 import datetime
 
-suffix = '10to50'
+suffix = '100to500'
+end = '20180826'
 
+'''
 idset = set()
 fr = open('../../dataset/aweme/overall_'+suffix+'.csv', 'r')
 data = fr.readlines()
@@ -14,6 +16,7 @@ for i in range(1, n):
 	temp = data[i][:-1].split(',')
 	idset.add(temp[0])
 print('Finished sample part.')	
+'''
 
 ietdic = {}
 fr = open('../../dataset/aweme/aweme_active_day_'+suffix+'.text', 'r')
@@ -22,11 +25,16 @@ data.sort()
 fr.close()
 n = len(data)
 lastid = ''
-for i in range(n-1):
+for i in range(n):
 	temp = data[i][:-1].split('\t')
-	newtemp = data[i+1][:-1].split('\t')
+	if i < n - 1:
+		newtemp = data[i+1][:-1].split('\t')
+	else:
+		newtemp = ['end', '20180826']
+	'''
 	if not temp[0] in idset:
 		continue
+	'''
 	if temp[1] == 'null\n' or temp[1] > '20180826':
 		continue
 	if newtemp[1] == 'null\n' or newtemp[1] > '20180826':
@@ -35,6 +43,10 @@ for i in range(n-1):
 		before = datetime.datetime.strptime(temp[1], '%Y%m%d')
 		after = datetime.datetime.strptime(newtemp[1], '%Y%m%d')
 		ietdic[data[i][:-1]] = str((after - before).days)
+	if newtemp[0] != temp[0] and temp[1] != '20180826':
+		before = datetime.datetime.strptime(temp[1], '%Y%m%d')
+		after = datetime.datetime.strptime(newtemp[1], '20180826')
+		ietdic[data[i][:-1]] = str((after - before).days)+'e'
 ietkey = sorted(ietdic.keys())
 print('Finished acitve part.')
 
