@@ -25,6 +25,9 @@ curtime = [0, 0, 0, 0, 0, 0] #social_rate_fol, social_rate_fan, social_number_fo
 for i in range(n):
 	temp = data[i][:-1].split('\t')
 	if lastid != temp[0]:
+		
+
+		
 		for j in range(6):
 			if curtime[j] != 0 and lastinfo[j] > 0:
 				if not cdlist.has_key(lastinfo[j]):

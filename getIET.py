@@ -3,9 +3,10 @@ import numpy as np
 import matplotlib as plt
 import datetime
 
-suffix = '10to50'
+suffix = '50to100'
 end = '20180826'
 
+'''
 idset = set()
 fr = open('../../dataset/aweme/overall_'+suffix+'.csv', 'r')
 data = fr.readlines()
@@ -15,9 +16,9 @@ for i in range(1, n):
 	temp = data[i][:-1].split(',')
 	idset.add(temp[0])
 print('Finished sample part.')	
-
+'''
 ietdic = {}
-fr = open('../../dataset/aweme/aweme_active_day_'+suffix+'.text', 'r')
+fr = open('../../../data/aweme_active_day_'+suffix+'.text', 'r')
 data = fr.readlines()
 data.sort()
 fr.close()
@@ -29,8 +30,10 @@ for i in range(n):
 		newtemp = data[i+1][:-1].split('\t')
 	else:
 		newtemp = ['end', '20180826']
+	'''
 	if not temp[0] in idset:
 		continue
+	'''
 	if temp[1] == 'null\n' or temp[1] > '20180826':
 		continue
 	if newtemp[1] == 'null\n' or newtemp[1] > '20180826':
@@ -47,7 +50,7 @@ ietkey = sorted(ietdic.keys())
 print('Finished acitve part.')
 
 foldic = {}
-fr = open('../../dataset/aweme/aweme_edge_follow_day_'+suffix+'.text', 'r')
+fr = open('../../../data/aweme_edge_follow_day_'+suffix+'.text', 'r')
 data = fr.readlines()
 data.sort()
 fr.close()
@@ -57,8 +60,10 @@ social = 0
 content = 0
 for i in range(n):
 	temp = data[i][:-1].split('\t')
+	'''
 	if not temp[0] in idset:
-		continue	
+		continue
+	'''
 	if temp[1] == 'null\n' or temp[1] > '20180826':
 		continue	
 	if temp[0] == lastid:
@@ -73,7 +78,7 @@ folkey = sorted(foldic.keys())
 print('Finished follow part.')
 
 fandic = {}
-fr = open('../../dataset/aweme/aweme_edge_fans_day_'+suffix+'.text', 'r')
+fr = open('../../../data/aweme_edge_fans_day_'+suffix+'.text', 'r')
 data = fr.readlines()
 data.sort()
 fr.close()
@@ -83,8 +88,10 @@ social = 0
 content = 0
 for i in range(n):
 	temp = data[i][:-1].split('\t')
+	'''
 	if not temp[0] in idset:
 		continue	
+	'''
 	if temp[1] == 'null\n' or temp[1] > '20180826':
 		continue	
 	if temp[0] == lastid:
@@ -99,7 +106,7 @@ fankey = sorted(fandic.keys())
 print('Finished fans part.')
 
 posdic = {}
-fr = open('../../dataset/aweme/aweme_post_day_'+suffix+'.text', 'r')
+fr = open('../../../data/aweme_post_day_'+suffix+'.text', 'r')
 data = fr.readlines()
 data.sort()
 fr.close()
@@ -108,8 +115,10 @@ lastid = ''
 posted = 0
 for i in range(n):
 	temp = data[i][:-1].split('\t')
+	'''
 	if not temp[0] in idset:
 		continue	
+	'''
 	if temp[1] == 'null\n' or temp[1] > '20180826':
 		continue	
 	if temp[0] == lastid:
@@ -182,7 +191,7 @@ for key in ietkey:
 			pospos += 1			
 print('Finished arranging part.')
 
-fw = open('../../dataset/aweme/aweme_active_iet_'+suffix+'.text', 'w')
+fw = open('../../../data/aweme_active_iet_'+suffix+'.text', 'w')
 for key in ietkey:
 	fw.write(key+'\t'+ietdic[key]+'\n')
 fw.close()
