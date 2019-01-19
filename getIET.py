@@ -19,7 +19,7 @@ print('Finished sample part.')
 '''
 
 ietdic = {}
-fr = open('../../dataset/aweme/aweme_active_day_'+suffix+'.text', 'r')
+fr = open('../../../data/aweme_active_day_'+suffix+'.text', 'r')
 data = fr.readlines()
 data.sort()
 fr.close()
@@ -51,7 +51,7 @@ ietkey = sorted(ietdic.keys())
 print('Finished acitve part.')
 
 foldic = {}
-fr = open('../../dataset/aweme/aweme_edge_follow_day_'+suffix+'.text', 'r')
+fr = open('../../../data/aweme_edge_follow_day_'+suffix+'.text', 'r')
 data = fr.readlines()
 data.sort()
 fr.close()
@@ -77,7 +77,7 @@ folkey = sorted(foldic.keys())
 print('Finished follow part.')
 
 fandic = {}
-fr = open('../../dataset/aweme/aweme_edge_fans_day_'+suffix+'.text', 'r')
+fr = open('../../../data/aweme_edge_fans_day_'+suffix+'.text', 'r')
 data = fr.readlines()
 data.sort()
 fr.close()
@@ -103,7 +103,7 @@ fankey = sorted(fandic.keys())
 print('Finished fans part.')
 
 posdic = {}
-fr = open('../../dataset/aweme/aweme_post_day_'+suffix+'.text', 'r')
+fr = open('../../../data/aweme_post_day_'+suffix+'.text', 'r')
 data = fr.readlines()
 data.sort()
 fr.close()
@@ -186,7 +186,7 @@ for key in ietkey:
 			pospos += 1			
 print('Finished arranging part.')
 
-fw = open('../../dataset/aweme/aweme_active_iet_'+suffix+'.text', 'w')
+fw = open('../../../data/aweme_active_iet_'+suffix+'.text', 'w')
 for key in ietkey:
 	fw.write(key+'\t'+ietdic[key]+'\n')
 fw.close()
