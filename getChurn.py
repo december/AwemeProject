@@ -4,7 +4,7 @@ import matplotlib as plt
 import datetime
 
 def WriteIt(info):
-	if info[-2] == 10:
+	if info[2] == 10:
 		return True
 	return False
 
@@ -98,7 +98,7 @@ for i in range(n):
 				curtime[j] = iet
 		lastinfo = curinfo
 	
-fw = open('../../dataset/aweme/aweme_churn_iet_'+suffix+'_sfan10.text', 'w')
+fw = open('../../dataset/aweme/aweme_churn_iet_'+suffix+'_sfol10.text', 'w')
 for i in range(6):
 	keys = sorted(cdlist[i].keys())
 	for k in keys:
