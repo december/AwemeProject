@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib as plt
 import datetime
 
-suffix = '10to50'
+suffix = '100to500'
 enddate = datetime.datetime.strptime('20180826', '%Y%m%d')
 idset = set()
 churnset = set()
