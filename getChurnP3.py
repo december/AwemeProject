@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib as plt
 import datetime
 
-suffix = '10to50'
+suffix = '100to500'
 enddate = datetime.datetime.strptime('20180826', '%Y%m%d')
 idset = set()
 churnset = set()
@@ -27,9 +27,9 @@ for i in range(n):
 	if lastid != temp[0]:
 		for j in range(6):
 			if curtime[j] != 0 and lastinfo[j] >= 0:
-				if not ncdlist[j].has_key(lastinfo[j]):
+				if not lastinfo[j] in ncdlist[j]:
 					ncdlist[j][lastinfo[j]] = {}
-				if ncdlist[j][lastinfo[j]].has_key(curtime[j]):
+				if curtime[j] in ncdlist[j][lastinfo[j]]:
 					ncdlist[j][lastinfo[j]][curtime[j]] += 1
 				else:
 					ncdlist[j][lastinfo[j]][curtime[j]] = 1
@@ -62,16 +62,16 @@ for i in range(n):
 			if curtime[j] == 0 or lastinfo[j] < 0:
 				continue
 			if curinfo[j] == lastinfo[j]:
-				if not cdlist[j].has_key(lastinfo[j]):
+				if not lastinfo[j] in cdlist[j]:
 					cdlist[lastinfo[j]] = {}
-				if cdlist[lastinfo[j]].has_key(curtime[j]):
+				if curtime[j] in cdlist[lastinfo[j]]:
 					cdlist[lastinfo[j]][curtime[j]] += 1
 				else:
 					cdlist[lastinfo[j]][curtime[j]] = 1
 			else:
-				if not ncdlist[j].has_key(lastinfo[j]):
+				if not lastinfo[j] in ncdlist[j]:
 					ncdlist[lastinfo[j]] = {}
-				if ncdlist[lastinfo[j]].has_key(curtime[j]):
+				if curtime[j] in ncdlist[lastinfo[j]]:
 					ncdlist[lastinfo[j]][curtime[j]] += 1
 				else:
 					ncdlist[lastinfo[j]][curtime[j]] = 1
@@ -84,9 +84,9 @@ for i in range(n):
 				curtime[j] += iet
 			if curinfo[j] != lastinfo[j]:
 				if curtime[j] != 0 and lastinfo[j] >= 0:
-					if not ncdlist[j].has_key(lastinfo[j]):
+					if not lastinfo[j] in ncdlist[j]:
 						ncdlist[lastinfo[j]] = {}
-					if ncdlist[lastinfo[j]].has_key(curtime[j]):
+					if curtime[j] in ncdlist[lastinfo[j]]:
 						ncdlist[lastinfo[j]][curtime[j]] += 1
 					else:
 						ncdlist[lastinfo[j]][curtime[j]] = 1
