@@ -63,18 +63,18 @@ for i in range(n):
 				continue
 			if curinfo[j] == lastinfo[j]:
 				if not lastinfo[j] in cdlist[j]:
-					cdlist[lastinfo[j]] = {}
+					cdlist[j][lastinfo[j]] = {}
 				if curtime[j] in cdlist[lastinfo[j]]:
-					cdlist[lastinfo[j]][curtime[j]] += 1
+					cdlist[j][lastinfo[j]][curtime[j]] += 1
 				else:
-					cdlist[lastinfo[j]][curtime[j]] = 1
+					cdlist[j][lastinfo[j]][curtime[j]] = 1
 			else:
 				if not lastinfo[j] in ncdlist[j]:
-					ncdlist[lastinfo[j]] = {}
-				if curtime[j] in ncdlist[lastinfo[j]]:
-					ncdlist[lastinfo[j]][curtime[j]] += 1
+					ncdlist[j][lastinfo[j]] = {}
+				if curtime[j] in ncdlist[j][lastinfo[j]]:
+					ncdlist[j][lastinfo[j]][curtime[j]] += 1
 				else:
-					ncdlist[lastinfo[j]][curtime[j]] = 1
+					ncdlist[j][lastinfo[j]][curtime[j]] = 1
 		lastinfo = [-1, -1, 0, 0, 0, 0]
 		curtime = [0, 0, 0, 0, 0, 0]
 		churnset.add(temp[0])
@@ -85,11 +85,11 @@ for i in range(n):
 			if curinfo[j] != lastinfo[j]:
 				if curtime[j] != 0 and lastinfo[j] >= 0:
 					if not lastinfo[j] in ncdlist[j]:
-						ncdlist[lastinfo[j]] = {}
-					if curtime[j] in ncdlist[lastinfo[j]]:
-						ncdlist[lastinfo[j]][curtime[j]] += 1
+						ncdlist[j][lastinfo[j]] = {}
+					if curtime[j] in ncdlist[j][lastinfo[j]]:
+						ncdlist[j][lastinfo[j]][curtime[j]] += 1
 					else:
-						ncdlist[lastinfo[j]][curtime[j]] = 1
+						ncdlist[j][lastinfo[j]][curtime[j]] = 1
 				curtime[j] = iet
 		lastinfo = curinfo
 	
