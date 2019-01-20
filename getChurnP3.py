@@ -64,7 +64,7 @@ for i in range(n):
 			if curinfo[j] == lastinfo[j]:
 				if not lastinfo[j] in cdlist[j]:
 					cdlist[j][lastinfo[j]] = {}
-				if curtime[j] in cdlist[lastinfo[j]]:
+				if curtime[j] in cdlist[j][lastinfo[j]]:
 					cdlist[j][lastinfo[j]][curtime[j]] += 1
 				else:
 					cdlist[j][lastinfo[j]][curtime[j]] = 1
