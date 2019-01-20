@@ -11,7 +11,7 @@ cdlist = list() #churn time
 ncdlist = list() #non churn time
 for i in range(6): #social_rate_fol, social_rate_fan, social_number_fol, content_number_fol, social_number_fan, content_number_fan
 	cdlist.append({})
-	ncdlist = append({})
+	ncdlist.append({})
 idset = set()
 fr = open('../../../data/aweme_active_iet_'+suffix+'.text', 'r')
 data = fr.readlines()
