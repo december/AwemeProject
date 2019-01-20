@@ -13,7 +13,7 @@ for i in range(6): #social_rate_fol, social_rate_fan, social_number_fol, content
 	cdlist.append({})
 	ncdlist.append({})
 idset = set()
-fr = open('../../../data/aweme_active_iet_'+suffix+'.text', 'r')
+fr = open('../../dataset/aweme/aweme_active_iet_'+suffix+'.text', 'r')
 data = fr.readlines()
 #data.sort()
 fr.close()
@@ -93,7 +93,7 @@ for i in range(n):
 				curtime[j] = iet
 		lastinfo = curinfo
 	
-fw = open('../../../data/aweme_churn_iet_'+suffix+'.text', 'w')
+fw = open('../../dataset/aweme/aweme_churn_iet_'+suffix+'.text', 'w')
 for i in range(6):
 	keys = sorted(cdlist[i].keys())
 	for k in keys:
