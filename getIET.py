@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib as plt
 import datetime
 
-suffix = '100to500'
+suffix = '50to100'
 end = '20180826'
 
 '''
