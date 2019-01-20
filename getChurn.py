@@ -3,6 +3,11 @@ import numpy as np
 import matplotlib as plt
 import datetime
 
+def WriteIt(info):
+	if info[-1] == 10:
+		return True
+	return False
+
 suffix = '10to50'
 enddate = datetime.datetime.strptime('20180826', '%Y%m%d')
 idset = set()
@@ -26,7 +31,7 @@ for i in range(n):
 	temp = data[i][:-1].split('\t')
 	if lastid != temp[0]:
 		for j in range(6):
-			if curtime[j] != 0 and lastinfo[j] >= 0:
+			if curtime[j] != 0 and lastinfo[j] >= 0 and WriteIt(lastinfo): #conditions
 				if not ncdlist[j].has_key(lastinfo[j]):
 					ncdlist[j][lastinfo[j]] = {}
 				if ncdlist[j][lastinfo[j]].has_key(curtime[j]):
@@ -59,7 +64,7 @@ for i in range(n):
 		iet = int(temp[2])
 	if iet >= 30:
 		for j in range(6):
-			if curtime[j] == 0 or lastinfo[j] < 0:
+			if curtime[j] == 0 or lastinfo[j] < 0 or not WriteIt(lastinfo): #conditions
 				continue
 			if curinfo[j] == lastinfo[j]:
 				if not cdlist[j].has_key(lastinfo[j]):
@@ -83,7 +88,7 @@ for i in range(n):
 			if curinfo[j] == lastinfo[j] and lastinfo[j] >= 0:
 				curtime[j] += iet
 			if curinfo[j] != lastinfo[j]:
-				if curtime[j] != 0 and lastinfo[j] >= 0:
+				if curtime[j] != 0 and lastinfo[j] >= 0 and WriteIt(lastinfo):
 					if not ncdlist[j].has_key(lastinfo[j]):
 						ncdlist[j][lastinfo[j]] = {}
 					if ncdlist[j][lastinfo[j]].has_key(curtime[j]):
@@ -93,7 +98,7 @@ for i in range(n):
 				curtime[j] = iet
 		lastinfo = curinfo
 	
-fw = open('../../dataset/aweme/aweme_churn_iet_'+suffix+'.text', 'w')
+fw = open('../../dataset/aweme/aweme_churn_iet_'+suffix+'_cfan10.text', 'w')
 for i in range(6):
 	keys = sorted(cdlist[i].keys())
 	for k in keys:
