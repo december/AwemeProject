@@ -108,7 +108,7 @@ def GradDes(cd, ncd, p, lr):
 			resulth = DlnhDk(p[0], p[1], p[2], p[3:], x, time)
 			results = DlnsDk(p[0], p[1], p[2], p[3:], x, time)
 			for i in range(3, 7):
-				grad[i] += (resulth[i] + results[i]) * cd[item][time]
+				grad[i] += (resulth[i-3] + results[i-3]) * cd[item][time]
 
 	for item in ncd:
 		x = item.split('\t')
@@ -119,7 +119,7 @@ def GradDes(cd, ncd, p, lr):
 			grad[2] += DlnsDtheta(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
 			result = DlnhDk(p[0], p[1], p[2], p[3:], x, time)
 			for i in range(3, 7):
-				grad[i] += result[i] * ncd[item][time]
+				grad[i] += result[i-3] * ncd[item][time]
 
 	for i in range(7):
 		newp[i] += grad[i] * lr[i]
