@@ -9,7 +9,7 @@ def WriteIt(info):
 	#return False
 	return True
 
-suffix = '100to500'
+suffix = 'sample'
 fr = open('/home/windxrz/toutiao/baseline/cleaned_data/aweme_active_iet_'+suffix+'.csv', 'r')
 data = fr.readlines()
 #data.sort()
