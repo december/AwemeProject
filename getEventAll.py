@@ -37,8 +37,8 @@ for i in range(1, n):
 itemlist = list()
 times = sorted(churndic.keys())
 for t in times:
-	for k in times[t]:
-		s = str(t) + '\t1\t' + times[t][k] + '\n' #time, whether churn, social_fol, content_fol, social_fan, content_fan
+	for k in churndic[t]:
+		s = str(t) + '\t1\t' + churndic[t][k] + '\n' #time, whether churn, social_fol, content_fol, social_fan, content_fan
 		itemlist.append(s)
 	for item in statusdic:
 		if lendic[item] < t:

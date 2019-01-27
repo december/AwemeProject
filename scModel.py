@@ -6,8 +6,7 @@ import scipy as sp
 import numpy as np
 import tensorflow as tf
 
-alpha1 = 1e-11
-alpha2 = 1e-10
+alpha = [1e-11, 1e-11, 1e-11, 1e-11, 1e-11, 1e-11, 1e-11] 
 total = 10000
 threshold = 0.0001
 
@@ -59,7 +58,7 @@ def DlnhDk(a, b, theta, k, x, t):
 		result.append(up / down)
 	return result
 
-def DhDtheta(a, b, theta, k, x, t):
+def DlnhDtheta(a, b, theta, k, x, t):
 	result = Gx(k, x)
 	return -1 * a * result * np.log(t) / (a * r + b * np.power(t, theta))
 
@@ -87,11 +86,14 @@ def DlnsDtheta(a, b, theta, k, x, t):
 	r2 = a * result * np.power(t, 1 - theta) / (1 - theta) / (1 - theta)
 	return r1 - r2
 
-def GradDes(cd, ncd, lbd, theta, lr1, lr2):
-	gradlbd = 0
-	gradtheta = 0
+def GradDes(cd, ncd, p, lr):
+	grad = list()
+	for i in range(7):
+		grad.append(0) #a, b, theta, k1, k2, k3, k4
 	for item in cd:
-		gradlbd += DhDlbd(lbd) * cd[item] + DsDlbd(theta, item) * cd[item]
+		grad[0] += DlnhDa(p[0], p[1], p[2], p[3:])
+
+		grad[0] += DhDlbd(lbd) * cd[item] + DsDlbd(theta, item) * cd[item]
 		gradtheta += DhDtheta(item) * cd[item] + DsDtheta(lbd, theta, item) * cd[item]
 	for item in ncd:
 		gradlbd += DsDlbd(theta, item) * ncd[item]
