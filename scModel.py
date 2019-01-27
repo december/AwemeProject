@@ -31,13 +31,13 @@ def LnObj(cd, ncd, p):
 	obj = 0
 	for item in cd:
 		x = item.split('\t')
-		x = [int(k) for k in x]
+		x = [(int(k) + 1) for k in x]
 		for time in cd[item]:
 			obj += LnScModelH(p[0], p[1], p[2], p[3:], x, time) * cd[item][time]
 			obj += LnScModelS(p[0], p[1], p[2], p[3:], x, time) * cd[item][time]
 	for item in ncd:
 		x = item.split('\t')
-		x = [int(k) for k in x]
+		x = [(int(k) + 1) for k in x]
 		for time in ncd[item]:
 			obj += LnScModelS(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
 	return obj
@@ -100,7 +100,7 @@ def GradDes(cd, ncd, p, lr):
 		newp.append(p[i])
 	for item in cd:
 		x = item.split('\t')
-		x = [int(k) for k in x]
+		x = [(int(k) + 1) for k in x]
 		for time in cd[item]:
 			grad[0] += (DlnhDa(p[0], p[1], p[2], p[3:], x, time) + DlnsDa(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
 			grad[1] += (DlnhDb(p[0], p[1], p[2], p[3:], x, time) + DlnsDb(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
@@ -112,7 +112,7 @@ def GradDes(cd, ncd, p, lr):
 
 	for item in ncd:
 		x = item.split('\t')
-		x = [int(k) for k in x]
+		x = [(int(k) + 1) for k in x]
 		for time in ncd[item]:
 			grad[0] += DlnsDa(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
 			grad[1] += DlnsDb(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
