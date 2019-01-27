@@ -105,7 +105,7 @@ def GradDes(cd, ncd, p, lr):
 			grad[0] += (DlnhDa(p[0], p[1], p[2], p[3:], x, time) + DlnsDa(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
 			grad[1] += (DlnhDb(p[0], p[1], p[2], p[3:], x, time) + DlnsDb(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
 			grad[2] += (DlnhDtheta(p[0], p[1], p[2], p[3:], x, time) + DlnsDtheta(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
-			result = DlnhDk(p[0], p[1], p[2], p[3:], x, time)
+			resulth = DlnhDk(p[0], p[1], p[2], p[3:], x, time)
 			results = DlnsDk(p[0], p[1], p[2], p[3:], x, time)
 			for i in range(3, 7):
 				grad[i] += (resulth[i] + results[i]) * cd[item][time]
@@ -165,7 +165,11 @@ while cnt < total:
 	p = GradDes(cdic, ncdic, p, alpha)
 	newObj = LnObj(cdic, ncdic, p)
 	delta = newObj - lastObj
+	s = ''
+	for i in range(7):
+		s += p[i] + '\t'
 	print 'Step ' + str(cnt) + ': ' + str(newObj) + ' (' + str(delta) + ' increased)'
+	print s
 	if delta <= threshold:
 		break
 	cnt += 1
