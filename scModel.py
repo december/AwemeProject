@@ -66,7 +66,7 @@ def DlnhDk(a, b, theta, k, x, t):
 
 def DlnhDtheta(a, b, theta, k, x, t):
 	result = Gx(k, x)
-	return -1 * a * result * np.log(t) / (a * r + b * np.power(t, theta))
+	return -1 * a * result * np.log(t) / (a * result + b * np.power(t, theta))
 
 def DlnsDa(a, b, theta, k, x, t):
 	result = Gx(k, x)
