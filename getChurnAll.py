@@ -14,8 +14,8 @@ fr = open('/home/windxrz/toutiao/baseline/cleaned_data/aweme_active_iet_'+suffix
 data = fr.readlines()
 #data.sort()
 fr.close()
-cdlist = list()
-ncdlist = list()
+cdlist = {}
+ncdlist = {}
 lastid = ''
 lastinfo = ''
 curtime = 0
