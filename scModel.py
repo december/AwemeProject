@@ -167,7 +167,7 @@ while cnt < total:
 	delta = newObj - lastObj
 	s = ''
 	for i in range(7):
-		s += p[i] + '\t'
+		s += str(p[i]) + '\t'
 	print 'Step ' + str(cnt) + ': ' + str(newObj) + ' (' + str(delta) + ' increased)'
 	print s
 	if delta <= threshold:
