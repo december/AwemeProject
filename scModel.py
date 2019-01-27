@@ -125,12 +125,18 @@ def GradDes(cd, ncd, p, lr):
 		newp[i] += grad[i] * lr[i]
 	return newp
 
+'''
 fr = open('../../dataset/aweme/aweme_status_iet_50to100.text', 'r')
 data = fr.readlines()
 fr.close()
 fr = open('../../dataset/aweme/aweme_status_iet_100to500.text', 'r')
 data.extend(fr.readlines())
 fr.close()
+'''
+fr = open('../../dataset/aweme/aweme_status_iet_sample.text', 'r')
+data = fr.readlines()
+fr.close()
+
 cdic = {} #info to time to popularity
 ncdic = {} #info to time to popularity
 n = len(data)
