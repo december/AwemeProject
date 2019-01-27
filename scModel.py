@@ -6,7 +6,7 @@ import scipy as sp
 import numpy as np
 import tensorflow as tf
 
-alpha = [1e-11, 1e-11, 1e-11, 1e-11, 1e-11, 1e-11, 1e-11] 
+alpha = [1e-11, 1e-11, 1e-11, 1e-11, 1e-11, 1e-11, 1e-11]
 total = 10000
 threshold = 0.0001
 
@@ -27,13 +27,19 @@ def LnScModelS(a, b, theta, k, x, t):
 	exponent = -1 * a * result * np.power(t, 1 - theta) / (1 - theta) - b * t
 	return exponent
 
-def LnObj(cd, ncd, lbd, theta):
+def LnObj(cd, ncd, p):
 	obj = 0
 	for item in cd:
-		obj += LnScModelH(lbd, theta, item) * cd[item]
-		obj += LnScModelS(lbd, theta, item) * cd[item]
+		x = item.split('\t')
+		x = [int(k) for k in x]
+		for time in cd[item]:
+			obj += LnScModelH(p[0], p[1], p[2], p[3:], x, time) * cd[item][time]
+			obj += LnScModelS(p[0], p[1], p[2], p[3:], x, time) * cd[item][time]
 	for item in ncd:
-		obj += LnScModelS(lbd, theta, item) * ncd[item]
+		x = item.split('\t')
+		x = [int(k) for k in x]
+		for time in ncd[item]:
+			obj += LnScModelS(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
 	return obj
 
 def DlnhDa(a, b, theta, k, x, t):
@@ -88,56 +94,80 @@ def DlnsDtheta(a, b, theta, k, x, t):
 
 def GradDes(cd, ncd, p, lr):
 	grad = list()
+	newp = list()
 	for i in range(7):
 		grad.append(0) #a, b, theta, k1, k2, k3, k4
+		newp.append(p[i])
 	for item in cd:
-		grad[0] += DlnhDa(p[0], p[1], p[2], p[3:])
+		x = item.split('\t')
+		x = [int(k) for k in x]
+		for time in cd[item]:
+			grad[0] += (DlnhDa(p[0], p[1], p[2], p[3:], x, time) + DlnsDa(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
+			grad[1] += (DlnhDb(p[0], p[1], p[2], p[3:], x, time) + DlnsDb(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
+			grad[2] += (DlnhDtheta(p[0], p[1], p[2], p[3:], x, time) + DlnsDtheta(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
+			result = DlnhDk(p[0], p[1], p[2], p[3:], x, time)
+			results = DlnsDk(p[0], p[1], p[2], p[3:], x, time)
+			for i in range(3, 7):
+				grad[i] += (resulth[i] + results[i]) * cd[item][time]
 
-		grad[0] += DhDlbd(lbd) * cd[item] + DsDlbd(theta, item) * cd[item]
-		gradtheta += DhDtheta(item) * cd[item] + DsDtheta(lbd, theta, item) * cd[item]
 	for item in ncd:
-		gradlbd += DsDlbd(theta, item) * ncd[item]
-		gradtheta += DsDtheta(lbd, theta, item) * ncd[item]
-	newlbd = lbd + gradlbd * lr1
-	newtheta = theta + gradtheta * lr2
-	return newlbd, newtheta
+		x = item.split('\t')
+		x = [int(k) for k in x]
+		for time in ncd[item]:
+			grad[0] += DlnsDa(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
+			grad[1] += DlnsDb(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
+			grad[2] += DlnsDtheta(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
+			result = DlnhDk(p[0], p[1], p[2], p[3:], x, time)
+			for i in range(3, 7):
+				grad[i] += result[i] * ncd[item][time]
 
-fr = open('../../../Bytedance/Data/aweme_churn_iet_50to100.text', 'r')
+	for i in range(7):
+		newp[i] += grad[i] * lr[i]
+	return newp
+
+fr = open('../../dataset/aweme/aweme_status_iet_50to100.text', 'r')
 data = fr.readlines()
 fr.close()
-fr = open('../../../Bytedance/Data/aweme_churn_iet_100to500.text', 'r')
+fr = open('../../dataset/aweme/aweme_status_iet_100to500.text', 'r')
 data.extend(fr.readlines())
 fr.close()
-cdic = {}
-ncdic = {}
+cdic = {} #info to time to popularity
+ncdic = {} #info to time to popularity
 n = len(data)
 for i in range(n):
 	temp = data[i][:-1].split('\t')
-	if temp[1] != '3' or int(temp[2]) != 100:
-		continue
+	info = temp[1] + '\t' + temp[2] + '\t' + temp[3] + '\t' + temp[4]
 	if temp[0] == '1':
-		if cdic.has_key(int(temp[3])):
-			cdic[int(temp[3])] += int(temp[4])
+		if not cdic.has_key(info):
+			cdic[info] = {}
+		if cdic[info].has_key(int(temp[5])):
+			cdic[info][int(temp[5])] += int(temp[6])
 		else:
-			cdic[int(temp[3])] = int(temp[4])
+			cdic[info][int(temp[5])] = int(temp[6])
 	else:
-		if ncdic.has_key(int(temp[3])):
-			ncdic[int(temp[3])] += int(temp[4])
+		if not ncdic.has_key(info):
+			ncdic[info] = {}
+		if ncdic[info].has_key(int(temp[5])):
+			ncdic[info][int(temp[5])] += int(temp[6])
 		else:
-			ncdic[int(temp[3])] = int(temp[4])
+			ncdic[info][int(temp[5])] = int(temp[6])		
+
 cnt = 0
-lbd = 0.0002
-theta = 0.6
-lastObj = LnObj(cdic, ncdic, lbd, theta)
+p = [0.1, 0.001, 0.1, 0.01, 0.01, 0.01, 0.01] #a, b, theta, k1, k2, k3, k4
+lastObj = LnObj(cdic, ncdic, p)
 while cnt < total:
-	lbd, theta = GradDes(cdic, ncdic, lbd, theta, alpha1, alpha2)
-	newObj = LnObj(cdic, ncdic, lbd, theta)
+	p = GradDes(cdic, ncdic, p, alpha)
+	newObj = LnObj(cdic, ncdic, p)
 	delta = newObj - lastObj
-	print 'Step ' + str(cnt) + ': ' + str(newObj) + ' (' + str(delta) + ' increased)(' + str(lbd) + ' ' + str(theta) + ')'
+	print 'Step ' + str(cnt) + ': ' + str(newObj) + ' (' + str(delta) + ' increased)'
 	if delta <= threshold:
 		break
 	cnt += 1
 	lastObj = newObj
-print 'Lambda: ' + str(lbd)
-print 'Theta: ' + str(theta)
-
+print 'a: ' + str(p[0])
+print 'b: ' + str(p[1])
+print 'theta: ' + str(p[2])
+print 'k1: ' + str(p[3])
+print 'k2: ' + str(p[4])
+print 'k3: ' + str(p[5])
+print 'k4: ' + str(p[6])
