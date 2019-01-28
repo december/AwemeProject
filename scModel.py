@@ -38,12 +38,12 @@ def LnObj(cd, ncd, p):
 		x = [(int(k) + 1) for k in x]
 		for time in cd[item]:
 			obj += LnScModelH(p[0], p[1], p[2], p[3:], x, time) * cd[item][time]
-			obj += LnScModelS(p[0], p[1], p[2], p[3:], x, time) * cd[item][time] + (np.log(p[0]) + np.log(p[1]))
+			obj += LnScModelS(p[0], p[1], p[2], p[3:], x, time) * cd[item][time]
 	for item in ncd:
 		x = item.split('\t')
 		x = [(int(k) + 1) for k in x]
 		for time in ncd[item]:
-			obj += LnScModelS(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time] + (np.log(p[0]) + np.log(p[1]))
+			obj += LnScModelS(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
 	return obj
 
 def DlnhDa(a, b, theta, k, x, t):
@@ -106,8 +106,8 @@ def GradDes(cd, ncd, p, lr):
 		x = item.split('\t')
 		x = [(int(k) + 1) for k in x]
 		for time in cd[item]:
-			grad[0] += (DlnhDa(p[0], p[1], p[2], p[3:], x, time) + DlnsDa(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time] + 1.0 / p[0]
-			grad[1] += (DlnhDb(p[0], p[1], p[2], p[3:], x, time) + DlnsDb(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time] + 1.0 / p[1]
+			grad[0] += (DlnhDa(p[0], p[1], p[2], p[3:], x, time) + DlnsDa(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
+			grad[1] += (DlnhDb(p[0], p[1], p[2], p[3:], x, time) + DlnsDb(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
 			grad[2] += (DlnhDtheta(p[0], p[1], p[2], p[3:], x, time) + DlnsDtheta(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
 			resulth = DlnhDk(p[0], p[1], p[2], p[3:], x, time)
 			results = DlnsDk(p[0], p[1], p[2], p[3:], x, time)
