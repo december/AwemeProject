@@ -26,10 +26,10 @@ def LnStExpS(lbd, theta, b, t):
 def LnObj(cd, ncd, lbd, theta, b):
 	obj = 0
 	for item in cd:
-		obj += LnStExpH(lbd, theta, item, b) * cd[item]
-		obj += LnStExpS(lbd, theta, item, b) * cd[item]
+		obj += LnStExpH(lbd, theta, b, item) * cd[item]
+		obj += LnStExpS(lbd, theta, b, item) * cd[item]
 	for item in ncd:
-		obj += LnStExpS(lbd, theta, item, b) * ncd[item]
+		obj += LnStExpS(lbd, theta, b, item) * ncd[item]
 	return obj
 
 def DlnhDlbd(lbd, theta, b, t):
@@ -61,9 +61,9 @@ def GradDes(cd, ncd, lbd, theta, b, lr1, lr2, lr3):
 		gradtheta += DlnhDtheta(lbd, theta, b, item) * cd[item] + DlnsDtheta(lbd, theta, b, item) * cd[item]
 		gradb += DlnhDb(lbd, theta, b, item) * cd[item] + DlnsDb(lbd, theta, b, item) * cd[item]
 	for item in ncd:
-		gradb += DlnsDb(lbd, theta, b, item) * ncd[item]
 		gradlbd += DlnsDlbd(lbd, theta, b, item) * ncd[item]
 		gradtheta += DlnsDtheta(lbd, theta, b, item) * ncd[item]
+		gradb += DlnsDb(lbd, theta, b, item) * ncd[item]
 	newlbd = lbd + gradlbd * lr1
 	newtheta = theta + gradtheta * lr2
 	newb = b + gradb * lr3
