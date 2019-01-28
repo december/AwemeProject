@@ -9,7 +9,7 @@ def WriteIt(info):
 	#return False
 	return True
 
-suffix = 'test'
+suffix = 'train'
 fr = open('/home/windxrz/toutiao/baseline/sample/sample_'+suffix+'.csv', 'r')
 data = fr.readlines()
 #data.sort()
