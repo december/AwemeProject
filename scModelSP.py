@@ -49,7 +49,7 @@ def LnObj(p):
 		x = [(int(k) + 1) for k in x]
 		for time in ncdic[item]:
 			obj += LnScModelS(p[0], p[1], p[2], p[3:], x, time) * ncdic[item][time]
-	return obj
+	return -1 * obj
 
 def DlnhDa(a, b, theta, k, x, t):
 	result = Gx(k, x)
