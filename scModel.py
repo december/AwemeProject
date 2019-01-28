@@ -122,7 +122,7 @@ def GradDes(cd, ncd, p, lr):
 			#grad[0] += DlnsDa(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
 			#grad[1] += DlnsDb(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
 			#grad[2] += DlnsDtheta(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
-			result = DlnhDk(p[0], p[1], p[2], p[3:], x, time)
+			result = DlnsDk(p[0], p[1], p[2], p[3:], x, time)
 			for i in range(3, 7):
 				grad[i] += result[i-3] * ncd[item][time]
 
