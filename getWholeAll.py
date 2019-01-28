@@ -41,7 +41,7 @@ for k in keys:
 	fw.write('1\t'+str(k)+'\t'+str(cdlist[k])+'\n') #whether churn, time, popularity
 keys = sorted(ncdlist.keys())
 for k in keys:
-	fw.write('1\t'+str(k)+'\t'+str(ncdlist[k])+'\n') #whether churn, time, popularity
+	fw.write('0\t'+str(k)+'\t'+str(ncdlist[k])+'\n') #whether churn, time, popularity
 fw.close()
 
 print('Finished writing part.')
