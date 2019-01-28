@@ -58,12 +58,13 @@ def DlnhDk(a, b, theta, k, x, t):
 	result = list()
 	for i in range(4):
 		s = a / np.power(t, theta)
-		up = s * np.power(x[i], k[i]) * np.log(x[i])
 		if i > 1:
 			s *= (np.power(x[0], k[0]) + np.power(x[1], k[1]))
+			up = s * np.power(x[i], k[i]) * np.log(x[i])
 			down = s * (np.power(x[2], k[2]) + np.power(x[3], k[3])) + b
 		else:
 			s *= (np.power(x[2], k[2]) + np.power(x[3], k[3]))
+			up = s * np.power(x[i], k[i]) * np.log(x[i])
 			down = s * (np.power(x[0], k[0]) + np.power(x[1], k[1])) + b
 		result.append(up / down)
 	return result
