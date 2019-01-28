@@ -69,12 +69,14 @@ def GradDes(cd, ncd, lbd, theta, b, lr1, lr2, lr3):
 	newb = b + gradb * lr3
 	return newlbd, newtheta, newb
 
-fr = open('../../../Bytedance/Data/aweme_whole_iet_train.text', 'r')
+
+fr = open('../../dataset/aweme/aweme_whole_iet_train.text', 'r')
 data = fr.readlines()
+fr.close()
 #fr.close()
 #fr = open('../../../Bytedance/Data/aweme_churn_iet_100to500.text', 'r')
 #data.extend(fr.readlines())
-fr.close()
+
 cdic = {}
 ncdic = {}
 n = len(data)
