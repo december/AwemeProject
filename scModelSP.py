@@ -168,6 +168,6 @@ for i in range(n):
 cnt = 0
 p = [0.05, -0.01, -1.0, -0.01, -0.01, -0.01, -0.01] #a, b, theta, k1, k2, k3, k4
 
-res = minimize(LnObj(p), p, method='BFGS', constraints=con(), options={'gtol': 1e-6, 'disp': True})
+res = sp.optimize.minimize(LnObj(p), p, method='BFGS', constraints=con(), options={'gtol': 1e-6, 'disp': True})
 print(res.fun)
 print(res.x)
