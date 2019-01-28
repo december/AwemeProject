@@ -99,7 +99,7 @@ while cnt < total:
 	lbd, theta, b = GradDes(cdic, ncdic, lbd, theta, alpha1, alpha2, alpha3)
 	newObj = LnObj(cdic, ncdic, lbd, theta, b)
 	delta = newObj - lastObj
-	print 'Step ' + str(cnt) + ': ' + str(newObj) + ' (' + str(delta) + ' increased)(' + str(lbd) + ' ' + str(theta) + ' ' + str(b) ')'
+	print 'Step ' + str(cnt) + ': ' + str(newObj) + ' (' + str(delta) + ' increased)(' + str(lbd) + ' ' + str(theta) + ' ' + str(b) + ')'
 	if delta <= threshold:
 		break
 	cnt += 1
