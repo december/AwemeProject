@@ -140,7 +140,7 @@ fr = open('../../dataset/aweme/aweme_status_iet_100to500.text', 'r')
 data.extend(fr.readlines())
 fr.close()
 '''
-fr = open('../../dataset/aweme/aweme_status_iet_sample.text', 'r')
+fr = open('../../dataset/aweme/aweme_status_iet_train.text', 'r')
 data = fr.readlines()
 fr.close()
 
