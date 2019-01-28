@@ -98,7 +98,7 @@ theta = -0.19
 b = 0
 lastObj = LnObj(cdic, ncdic, lbd, theta, b)
 while cnt < total:
-	lbd, theta, b = GradDes(cdic, ncdic, lbd, theta, alpha1, alpha2, alpha3)
+	lbd, theta, b = GradDes(cdic, ncdic, lbd, theta, b, alpha1, alpha2, alpha3)
 	newObj = LnObj(cdic, ncdic, lbd, theta, b)
 	delta = newObj - lastObj
 	print 'Step ' + str(cnt) + ': ' + str(newObj) + ' (' + str(delta) + ' increased)(' + str(lbd) + ' ' + str(theta) + ' ' + str(b) + ')'
