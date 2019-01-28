@@ -38,7 +38,7 @@ def LnObj(p):
 	for item in cdic:
 		x = item.split('\t')
 		x = [(int(k) + 1) for k in x]
-		for time in cd[item]:
+		for time in cdic[item]:
 			obj += LnScModelH(p[0], p[1], p[2], p[3:], x, time) * cdic[item][time]
 			obj += LnScModelS(p[0], p[1], p[2], p[3:], x, time) * cdic[item][time]
 	for item in ncdic:
