@@ -22,54 +22,26 @@ curtime = 0
 n = len(data)
 for i in range(1, n):
 	temp = data[i][:-1].split('\t')
-	info = temp[2] + '\t' + temp[3] + '\t' + temp[4] + '\t' + temp[5]
-	if lastid != temp[0]:
-		if curtime != 0 and lastinfo != '' and lastid != '' and WriteIt(lastinfo):
-			if not ncdlist.has_key(lastinfo):
-				ncdlist[lastinfo] = {}
-			if ncdlist[lastinfo].has_key(curtime):
-				ncdlist[lastinfo][curtime] += 1
-			else:
-				ncdlist[lastinfo][curtime] = 1
-		lastid = temp[0]
-		lastinfo = info
-		curtime = int(temp[1])
-	else:
-		if lastinfo == info:
-			curtime += int(temp[1])
-		else:
-			if curtime != 0 and lastinfo != '' and lastid != '' and WriteIt(lastinfo):
-				if not ncdlist.has_key(lastinfo):
-					ncdlist[lastinfo] = {}
-				if ncdlist[lastinfo].has_key(curtime):
-					ncdlist[lastinfo][curtime] += 1
-				else:
-					ncdlist[lastinfo][curtime] = 1
-			lastinfo = info
-			curtime = int(temp[1])
+	time = int(temp[-2])
 	if temp[7] == 'True':
-		if curtime != 0 and lastinfo != '' and lastid != '' and WriteIt(lastinfo):
-			if not cdlist.has_key(lastinfo):
-				cdlist[lastinfo] = {}
-			if cdlist[lastinfo].has_key(curtime):
-				cdlist[lastinfo][curtime] += 1
-			else:
-				cdlist[lastinfo][curtime] = 1
-		lastid = ''
-		lastinfo = ''
-		curtime = 0
+		if cdlist.has_key(time):
+			cdlist[time] += 1
+		else:
+			cdlist[time] = 1
+		continue
+	if i == n - 1 or temp[0] != data[i+1][:-1].split('\t')[0]:
+		if ncdlist.has_key(time):
+			ncdlist[time] += 1
+		else:
+			ncdlist[time] = 1
 	
-fw = open('../../dataset/aweme/aweme_status_iet_'+suffix+'.text', 'w')
+fw = open('../../dataset/aweme/aweme_whole_iet_'+suffix+'.text', 'w')
 keys = sorted(cdlist.keys())
 for k in keys:
-	newkeys = sorted(cdlist[k].keys())
-	for nk in newkeys:
-		fw.write('1\t'+str(k)+'\t'+str(nk)+'\t'+str(cdlist[k][nk])+'\n') #whether churn, social_fol, content_fol, social_fan, content_fan, time, popularity
+	fw.write('1\t'+str(k)+'\t'+str(cdlist[k])+'\n') #whether churn, time, popularity
 keys = sorted(ncdlist.keys())
 for k in keys:
-	newkeys = sorted(ncdlist[k].keys())
-	for nk in newkeys:
-		fw.write('0\t'+str(k)+'\t'+str(nk)+'\t'+str(ncdlist[k][nk])+'\n') #whether churn, social_fol, content_fol, social_fan, content_fan, time, popularity
+	fw.write('1\t'+str(k)+'\t'+str(ncdlist[k])+'\n') #whether churn, time, popularity
 fw.close()
 
 print('Finished writing part.')
