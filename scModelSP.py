@@ -132,7 +132,7 @@ def GradDes(cd, ncd, p, lr):
 	return newp
 
 def con():
-    cons = ({'type': 'ineq', 'fun': lambda x: x[0]}, {'type': 'ineq', 'fun': lambda x: -x[2] + 1 - 1e-10})
+    cons = ({'type': 'ineq', 'fun': lambda x: x[0]}, {'type': 'ineq', 'fun': lambda x: -x[2] + 1 - 1e-10}, {'type': 'ineq', 'fun': lambda x: -x[3] + 1}, {'type': 'ineq', 'fun': lambda x: -x[4] + 1}, {'type': 'ineq', 'fun': lambda x: -x[5] + 1}, {'type': 'ineq', 'fun': lambda x: -x[6] + 1})
     return cons
 
 '''
@@ -168,7 +168,6 @@ for i in range(n):
 cnt = 0
 p = [0.05, -0.01, -1.0, -0.01, -0.01, -0.01, -0.01] #a, b, theta, k1, k2, k3, k4
 
-res = sp.optimize.minimize(LnObj, p, constraints=con(), options={'disp': True})
-print res.success
+res = sp.optimize.minimize(LnObj, p, constraints=con(), options={'maxiter': 10000, 'disp': True})
 print res.fun
 print res.x
