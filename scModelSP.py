@@ -132,8 +132,6 @@ def GradDes(cd, ncd, p, lr):
 	return newp
 
 def con():
-    # 约束条件 分为eq 和ineq
-    #eq表示 函数结果等于0 ； ineq 表示 表达式大于等于0  
     cons = ({'type': 'ineq', 'fun': lambda x: x[0]}, {'type': 'ineq', 'fun': lambda x: -x[2] + 1 - 1e-10})
     return cons
 
