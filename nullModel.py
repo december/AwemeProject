@@ -95,7 +95,7 @@ for i in range(n):
 cnt = 0
 lbd = 0.1
 theta = 0.1
-b = 0.1
+b = 0.5
 lastObj = LnObj(cdic, ncdic, lbd, theta, b)
 while cnt < total:
 	lbd, theta, b = GradDes(cdic, ncdic, lbd, theta, b, alpha1, alpha2, alpha3)
