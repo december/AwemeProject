@@ -135,7 +135,7 @@ def GradDes(cd, ncd, p, lr):
 	return newp
 
 def con():
-    cons = ({'type': 'ineq', 'fun': lambda x: x[0]}, {'type': 'ineq', 'fun': lambda x: -x[2] + 1 - 1e-10}, {'type': 'ineq', 'fun': lambda x: -x[3] + 1}, {'type': 'ineq', 'fun': lambda x: -x[4] + 1}, {'type': 'ineq', 'fun': lambda x: -x[5] + 1}, {'type': 'ineq', 'fun': lambda x: -x[6] + 1})
+    cons = ({'type': 'ineq', 'fun': lambda x: x[0]}, {'type': 'ineq', 'fun': lambda x: x[2] + 2}, {'type': 'ineq', 'fun': lambda x: -x[2] + 1 - 1e-10}, {'type': 'ineq', 'fun': lambda x: -x[3] + 1}, {'type': 'ineq', 'fun': lambda x: -x[4] + 1}, {'type': 'ineq', 'fun': lambda x: -x[5] + 1}, {'type': 'ineq', 'fun': lambda x: -x[6] + 1})
     return cons
 
 '''
