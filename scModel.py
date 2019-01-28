@@ -44,7 +44,7 @@ def LnObj(cd, ncd, p):
 		x = [(int(k) + 1) for k in x]
 		for time in ncd[item]:
 			obj += LnScModelS(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
-	return obj
+	return obj + np.log(p[0]) + np.log(p[1])
 
 def DlnhDa(a, b, theta, k, x, t):
 	result = Gx(k, x)
@@ -125,6 +125,8 @@ def GradDes(cd, ncd, p, lr):
 			for i in range(3, 7):
 				grad[i] += result[i-3] * ncd[item][time]
 
+	grad[0] += 1 / p[0]
+	grad[1] += 1 / p[1]
 	for i in range(7):
 		newp[i] += grad[i] * lr[i]
 	return newp
