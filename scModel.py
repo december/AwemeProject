@@ -107,9 +107,9 @@ def GradDes(cd, ncd, p, lr):
 		x = item.split('\t')
 		x = [(int(k) + 1) for k in x]
 		for time in cd[item]:
-			grad[0] += (DlnhDa(p[0], p[1], p[2], p[3:], x, time) + DlnsDa(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
-			grad[1] += (DlnhDb(p[0], p[1], p[2], p[3:], x, time) + DlnsDb(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
-			grad[2] += (DlnhDtheta(p[0], p[1], p[2], p[3:], x, time) + DlnsDtheta(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
+			#grad[0] += (DlnhDa(p[0], p[1], p[2], p[3:], x, time) + DlnsDa(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
+			#grad[1] += (DlnhDb(p[0], p[1], p[2], p[3:], x, time) + DlnsDb(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
+			#grad[2] += (DlnhDtheta(p[0], p[1], p[2], p[3:], x, time) + DlnsDtheta(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
 			resulth = DlnhDk(p[0], p[1], p[2], p[3:], x, time)
 			results = DlnsDk(p[0], p[1], p[2], p[3:], x, time)
 			for i in range(3, 7):
@@ -119,9 +119,9 @@ def GradDes(cd, ncd, p, lr):
 		x = item.split('\t')
 		x = [(int(k) + 1) for k in x]
 		for time in ncd[item]:
-			grad[0] += DlnsDa(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
-			grad[1] += DlnsDb(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
-			grad[2] += DlnsDtheta(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
+			#grad[0] += DlnsDa(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
+			#grad[1] += DlnsDb(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
+			#grad[2] += DlnsDtheta(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
 			result = DlnsDk(p[0], p[1], p[2], p[3:], x, time)
 			for i in range(3, 7):
 				grad[i] += result[i-3] * ncd[item][time]
