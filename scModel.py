@@ -20,6 +20,10 @@ def Gx(k, x):
 
 def LnScModelH(a, b, theta, k, x, t):
 	result = Gx(k, x)
+	lbd = a * result / np.power(t, theta) + b
+	if lbd < 0:
+		print lbd
+		print str(a) + ' ' + str(result) + ' ' + str(np.power(t, theta)) + ' ' + str(b)
 	return np.log(a * result / np.power(t, theta) + b)
 
 def LnScModelS(a, b, theta, k, x, t):
