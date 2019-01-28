@@ -168,6 +168,7 @@ for i in range(n):
 cnt = 0
 p = [0.05, -0.01, -1.0, -0.01, -0.01, -0.01, -0.01] #a, b, theta, k1, k2, k3, k4
 
-res = sp.optimize.minimize(LnObj(p), p, constraints=con(), options={'disp': True})
-print(res.fun)
-print(res.x)
+res = sp.optimize.minimize(LnObj, p, constraints=con(), options={'disp': True})
+print res.success
+print res.fun
+print res.x
