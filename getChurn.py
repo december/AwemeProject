@@ -8,7 +8,7 @@ def WriteIt(info):
 		return True
 	return False
 
-suffix = '50to100'
+suffix = '100to500'
 enddate = datetime.datetime.strptime('20180826', '%Y%m%d')
 idset = set()
 churnset = set()
