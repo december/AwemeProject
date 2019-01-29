@@ -6,7 +6,7 @@ import scipy as sp
 import numpy as np
 import tensorflow as tf
 
-alpha = [1e-10, 1e-11, 1e-7, 1e-7, 1e-7, 1e-7, 1e-7]
+alpha = [1e-11, 1e-11, 1e-7, 1e-7, 1e-7, 1e-7, 1e-7]
 total = 10000
 threshold = 0.0001
 
