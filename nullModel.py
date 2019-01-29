@@ -93,9 +93,9 @@ for i in range(n):
 		else:
 			ncdic[int(temp[1])] = int(temp[2])
 cnt = 0
-lbd = 0.0667
-theta = 0.78
-b = 0.006
+lbd = 0.0021338685154874146
+theta = 0.7714437805425987
+b = 0.006444845253735451
 lastObj = LnObj(cdic, ncdic, lbd, theta, b)
 while cnt < total:
 	lbd, theta, b = GradDes(cdic, ncdic, lbd, theta, b, alpha1, alpha2, alpha3)
