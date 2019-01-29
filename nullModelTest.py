@@ -69,7 +69,7 @@ ncdic = {}
 n = len(data)
 for i in range(n):
 	temp = data[i][:-1].split('\t')
-	if temp[1] != '5':
+	if temp[1] != '3' or int(temp[2]) != 2080:
 		continue
 	if temp[0] == '1':
 		if cdic.has_key(int(temp[3])):
@@ -82,8 +82,8 @@ for i in range(n):
 		else:
 			ncdic[int(temp[3])] = int(temp[4])
 cnt = 0
-lbd = 0.0004
-theta = -0.19
+lbd = 0.00016
+theta = -1.37
 lastObj = LnObj(cdic, ncdic, lbd, theta)
 while cnt < total:
 	lbd, theta = GradDes(cdic, ncdic, lbd, theta, alpha1, alpha2)
