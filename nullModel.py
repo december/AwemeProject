@@ -6,7 +6,7 @@ import scipy as sp
 import numpy as np
 import tensorflow as tf
 
-alpha1 = 1e-12
+alpha1 = 1e-11
 alpha2 = 1e-10
 alpha3 = 1e-13
 total = 10000
