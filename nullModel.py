@@ -6,7 +6,7 @@ import scipy as sp
 import numpy as np
 import tensorflow as tf
 
-alpha1 = 1e-13
+alpha1 = 1e-12
 alpha2 = 1e-10
 alpha3 = 1e-13
 total = 10000
@@ -93,9 +93,9 @@ for i in range(n):
 		else:
 			ncdic[int(temp[1])] = int(temp[2])
 cnt = 0
-lbd = 0.1
-theta = 0.1
-b = 0.05
+lbd = 0.09778
+theta = 0.73
+b = 0.035
 lastObj = LnObj(cdic, ncdic, lbd, theta, b)
 while cnt < total:
 	lbd, theta, b = GradDes(cdic, ncdic, lbd, theta, b, alpha1, alpha2, alpha3)
