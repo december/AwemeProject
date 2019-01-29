@@ -93,8 +93,8 @@ for i in range(n):
 		else:
 			ncdic[int(temp[1])] = int(temp[2])
 cnt = 0
-lbd = 0.0729
-theta = 0.78665
+lbd = 0.0667
+theta = 0.78
 b = 0.006
 lastObj = LnObj(cdic, ncdic, lbd, theta, b)
 while cnt < total:
