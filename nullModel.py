@@ -9,7 +9,7 @@ import tensorflow as tf
 alpha1 = 1e-11
 alpha2 = 1e-10
 alpha3 = 1e-13
-total = 10000
+total = 100000
 threshold = 0.00001
 
 def LogNormal(x, u, s):
@@ -93,9 +93,9 @@ for i in range(n):
 		else:
 			ncdic[int(temp[1])] = int(temp[2])
 cnt = 0
-lbd = 0.0021338685154874146
-theta = 0.7714437805425987
-b = 0.006444845253735451
+lbd = 0.0667
+theta = 0.78
+b = 0.006
 lastObj = LnObj(cdic, ncdic, lbd, theta, b)
 while cnt < total:
 	lbd, theta, b = GradDes(cdic, ncdic, lbd, theta, b, alpha1, alpha2, alpha3)
