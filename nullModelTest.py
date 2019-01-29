@@ -58,10 +58,10 @@ def GradDes(cd, ncd, lbd, theta, lr1, lr2):
 	newtheta = theta + gradtheta * lr2
 	return newlbd, newtheta
 
-fr = open('../../../Bytedance/Data/aweme_churn_iet_50to100.text', 'r')
+fr = open('../../../Bytedance/Data/aweme_churn_iet_50to100_sfol.text', 'r')
 data = fr.readlines()
 fr.close()
-fr = open('../../../Bytedance/Data/aweme_churn_iet_100to500.text', 'r')
+fr = open('../../../Bytedance/Data/aweme_churn_iet_100to500_sfol.text', 'r')
 data.extend(fr.readlines())
 fr.close()
 cdic = {}
@@ -69,7 +69,7 @@ ncdic = {}
 n = len(data)
 for i in range(n):
 	temp = data[i][:-1].split('\t')
-	if temp[1] != '2' or int(temp[2]) != 70:
+	if temp[1] != '3' or int(temp[2]) != 0:
 		continue
 	if temp[0] == '1':
 		if cdic.has_key(int(temp[3])):
