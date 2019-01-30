@@ -108,8 +108,8 @@ def GradDes(cd, ncd, p, lr):
 		x = [(int(k) + 1) for k in x]
 		for time in cd[item]:
 			grad[0] += (DlnhDa(p[0], p[1], p[2], p[3:], x, time) + DlnsDa(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
-			grad[1] += (DlnhDb(p[0], p[1], p[2], p[3:], x, time) + DlnsDb(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
-			grad[2] += (DlnhDtheta(p[0], p[1], p[2], p[3:], x, time) + DlnsDtheta(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
+			#grad[1] += (DlnhDb(p[0], p[1], p[2], p[3:], x, time) + DlnsDb(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
+			#grad[2] += (DlnhDtheta(p[0], p[1], p[2], p[3:], x, time) + DlnsDtheta(p[0], p[1], p[2], p[3:], x, time)) * cd[item][time]
 			resulth = DlnhDk(p[0], p[1], p[2], p[3:], x, time)
 			results = DlnsDk(p[0], p[1], p[2], p[3:], x, time)
 			for i in range(3, 7):
@@ -120,8 +120,8 @@ def GradDes(cd, ncd, p, lr):
 		x = [(int(k) + 1) for k in x]
 		for time in ncd[item]:
 			grad[0] += DlnsDa(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
-			grad[1] += DlnsDb(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
-			grad[2] += DlnsDtheta(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
+			#grad[1] += DlnsDb(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
+			#grad[2] += DlnsDtheta(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
 			result = DlnsDk(p[0], p[1], p[2], p[3:], x, time)
 			for i in range(3, 7):
 				grad[i] += result[i-3] * ncd[item][time]
@@ -166,7 +166,7 @@ for i in range(n):
 			ncdic[info][int(temp[5])] = int(temp[6])		
 
 cnt = 0
-p = [0.0025, 0.001, 0.15, -0.5, -0.5, -0.5, -0.5] #a, b, theta, k1, k2, k3, k4
+p = [0.0025, 0.0006135536130181019, 0.7280549135780887, -0.5, -0.5, -0.5, -0.5] #a, b, theta, k1, k2, k3, k4
 lastObj = LnObj(cdic, ncdic, p)
 while cnt < total:
 	p = GradDes(cdic, ncdic, p, alpha)
