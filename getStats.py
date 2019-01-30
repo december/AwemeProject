@@ -21,7 +21,7 @@ totalcfan = 0
 i = 0
 while i < n:
 	temp = data[i][:-1].split('\t')
-	if i == n - 1 or data[i+1][:-1].split('\t')[0] != temp
+	if i == n - 1 or data[i+1][:-1].split('\t')[0] != temp[0]
 		if temp[1] < '20180826':
 			totaluser += 1
 			totalsfol += int(temp[3])
