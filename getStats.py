@@ -28,6 +28,7 @@ while i < n:
 			totalcfol += int(temp[4])
 			totalsfan += int(temp[5])
 			totalcfan += int(temp[6])
+		i += 1
 	else:
 		if int(temp[2]) >= 30:
 			totaluser += 1
