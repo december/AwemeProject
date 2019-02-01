@@ -6,7 +6,7 @@ import scipy as sp
 import numpy as np
 import tensorflow as tf
 
-alpha = [5e-12, 5e-12, 5e-8, 5e-5, 5e-5, 5e-5, 5e-5]
+alpha = [3e-12, 3e-12, 3e-8, 3e-5, 3e-5, 3e-5, 3e-5]
 total = 10000
 threshold = 0.0001
 
@@ -166,7 +166,7 @@ for i in range(n):
 			ncdic[info][int(temp[5])] = int(temp[6])		
 
 cnt = 0
-p = [0.0012949314217463935, 0.00013703372128902574, -0.1787395411981456, -0.3340346397177808, -1.4164618556421265, -0.7369247351363751, -3.0100556227686517] #a, b, theta, k1, k2, k3, k4
+p = [0.0013243502104125376, -0.0000945839276113880, -0.15318736082902836, -0.1425807638291218, -1.4798576801188046, -0.45128249194426634, -3.02212095389] #a, b, theta, k1, k2, k3, k4
 lastObj = LnObj(cdic, ncdic, p)
 while cnt < total:
 	p = GradDes(cdic, ncdic, p, alpha)
