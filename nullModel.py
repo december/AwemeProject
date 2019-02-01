@@ -6,9 +6,9 @@ import scipy as sp
 import numpy as np
 import tensorflow as tf
 
-alpha1 = 5e-10
-alpha2 = 5e-8
-alpha3 = 5e-10
+alpha1 = 2e-10
+alpha2 = 2e-8
+alpha3 = 2e-10
 total = 100000
 threshold = 0.00001
 
