@@ -70,7 +70,7 @@ def GradDes(cd, ncd, lbd, theta, b, lr1, lr2, lr3):
 	return newlbd, newtheta, newb
 
 
-fr = open('../../dataset/aweme/aweme_whole_iet_train.text', 'r')
+fr = open('../../dataset/aweme/aweme_whole_iet_train_half.text', 'r')
 data = fr.readlines()
 fr.close()
 #fr.close()
@@ -93,9 +93,9 @@ for i in range(n):
 		else:
 			ncdic[int(temp[1])] = int(temp[2])
 cnt = 0
-lbd = 0.0667
-theta = 0.78
-b = 0.006
+lbd = 0.002490702411067944
+theta = 0.7280549135780887
+b = 0.0006135536130181019
 lastObj = LnObj(cdic, ncdic, lbd, theta, b)
 while cnt < total:
 	lbd, theta, b = GradDes(cdic, ncdic, lbd, theta, b, alpha1, alpha2, alpha3)
