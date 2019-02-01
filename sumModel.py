@@ -125,7 +125,7 @@ fr = open('../../dataset/aweme/aweme_status_iet_100to500.text', 'r')
 data.extend(fr.readlines())
 fr.close()
 '''
-fr = open('../../dataset/aweme/aweme_status_iet_train.text', 'r')
+fr = open('../../dataset/aweme/aweme_status_iet_train_half.text', 'r')
 data = fr.readlines()
 fr.close()
 
@@ -151,7 +151,7 @@ for i in range(n):
 			ncdic[info][int(temp[5])] = int(temp[6])		
 
 cnt = 0
-p = [0.0007058266545417889, 0.00027864170375874615, -0.15, -2.557340593997636, -2.1284711847602815, -2.5835655719945136, -2.461157910083856] #a, b, theta, k1, k2, k3, k4
+p = [0.0006918450936869507, 0.0002696139131102916, -0.05516546747161913, -2.5598930328475156, -2.129070594433223, -2.58587634308447, -2.462745716163459] #a, b, theta, k1, k2, k3, k4
 lastObj = LnObj(cdic, ncdic, p)
 while cnt < total:
 	p = GradDes(cdic, ncdic, p, alpha)
