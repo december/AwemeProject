@@ -151,7 +151,7 @@ for i in range(n):
 			ncdic[info][int(temp[5])] = int(temp[6])		
 
 cnt = 0
-p = [0.0013243502104125376, -0.0000945839276113880, -0.16318736082902836, -0.1425807638291218, -1.4798576801188046, -0.45128249194426634, -3.02212095389] #a, b, theta, k1, k2, k3, k4
+p = [0.01, 0.001, 0.2, -0.5, -0.5, -0.5, -0.5] #a, b, theta, k1, k2, k3, k4
 lastObj = LnObj(cdic, ncdic, p)
 while cnt < total:
 	p = GradDes(cdic, ncdic, p, alpha)

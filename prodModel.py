@@ -16,7 +16,7 @@ def LogNormal(x, u, s):
 	return p
 
 def Gx(k, x):
-	return (np.power(x[0], k[0]) + np.power(x[1], k[1])) * (np.power(x[2], k[2]) + np.power(x[3], k[3]))
+	return np.power(x[0], k[0]) * np.power(x[1], k[1]) * np.power(x[2], k[2]) * np.power(x[3], k[3])
 
 def LnScModelH(a, b, theta, k, x, t):
 	result = Gx(k, x)
@@ -56,16 +56,10 @@ def DlnhDb(a, b, theta, k, x, t):
 
 def DlnhDk(a, b, theta, k, x, t):
 	result = list()
+	r = Gx(k, x) * a
 	for i in range(4):
-		s = a / np.power(t, theta)
-		if i > 1:
-			s *= (np.power(x[0], k[0]) + np.power(x[1], k[1]))
-			up = s * np.power(x[i], k[i]) * np.log(x[i])
-			down = s * (np.power(x[2], k[2]) + np.power(x[3], k[3])) + b
-		else:
-			s *= (np.power(x[2], k[2]) + np.power(x[3], k[3]))
-			up = s * np.power(x[i], k[i]) * np.log(x[i])
-			down = s * (np.power(x[0], k[0]) + np.power(x[1], k[1])) + b
+		up = r * np.log(x[i])
+		down = r + b * np.power(t, theta)
 		result.append(up / down)
 	return result
 
@@ -82,13 +76,9 @@ def DlnsDb(a, b, theta, k, x, t):
 
 def DlnsDk(a, b, theta, k, x, t):
 	result = list()
+	r = Gx(k, x) * a * np.power(t, 1 - theta) / (theta - 1)
 	for i in range(4):
-		s = a * np.power(t, 1 - theta) / (1 - theta)
-		if i > 1:
-			s *= (np.power(x[0], k[0]) + np.power(x[1], k[1]))
-		else:
-			s *= (np.power(x[2], k[2]) + np.power(x[3], k[3]))
-		result.append(-1 * s * np.power(x[i], k[i]) * np.log(x[i]))
+		result.append(r * np.log(x[i]))
 	return result
 
 def DlnsDtheta(a, b, theta, k, x, t):
@@ -166,7 +156,7 @@ for i in range(n):
 			ncdic[info][int(temp[5])] = int(temp[6])		
 
 cnt = 0
-p = [0.0013243502104125376, -0.0000945839276113880, -0.16318736082902836, -0.1425807638291218, -1.4798576801188046, -0.45128249194426634, -3.02212095389] #a, b, theta, k1, k2, k3, k4
+p = [0.01, 0.001, 0.2, 0, 0, 0, 0] #a, b, theta, k1, k2, k3, k4
 lastObj = LnObj(cdic, ncdic, p)
 while cnt < total:
 	p = GradDes(cdic, ncdic, p, alpha)
