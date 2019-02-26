@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib as plt
 import datetime
 
+#筛选数据的条件
 def WriteIt(info):
 	if info[4] == 10:
 		return True
@@ -25,6 +26,7 @@ fr.close()
 n = len(data)
 lastid = ''
 lastdate = ''
+#记录每一天的状态（四种不同类型的边数以及关注和被关注的social ratio）以及该状态持续的时间
 lastinfo = [-1, -1, 0, 0, 0, 0] #social_rate_fol, social_rate_fan, social_number_fol, content_number_fol, social_number_fan, content_number_fan
 curtime = [0, 0, 0, 0, 0, 0] #social_rate_fol, social_rate_fan, social_number_fol, content_number_fol, social_number_fan, content_number_fan
 for i in range(n):
@@ -45,6 +47,7 @@ for i in range(n):
 	totalfol = int(temp[3]) + int(temp[4])
 	totalfan = int(temp[5]) + int(temp[6])
 	if not temp[0] in idset:
+		#从关注数或粉丝数超过10认为用户开始使用
 		if totalfol >= 10 or totalfan >= 10:
 			idset.add(temp[0])
 		else:
@@ -62,6 +65,7 @@ for i in range(n):
 		iet = int(temp[2][:-1])
 	else:
 		iet = int(temp[2])
+	#大于等于30天的认为流失
 	if iet >= 30:
 		for j in range(6):
 			if curtime[j] == 0 or lastinfo[j] < 0 or not WriteIt(lastinfo): #conditions
@@ -97,7 +101,8 @@ for i in range(n):
 						ncdlist[j][lastinfo[j]][curtime[j]] = 1
 				curtime[j] = iet
 		lastinfo = curinfo
-	
+
+#输出符合条件的数据
 fw = open('../../dataset/aweme/aweme_churn_iet_'+suffix+'_sfan10.text', 'w')
 for i in range(6):
 	keys = sorted(cdlist[i].keys())

@@ -17,12 +17,15 @@ def LogNormal(x, u, s):
 	p /= np.exp((np.log(x) - u) ** 2 / 2 / (s ** 2))
 	return p
 
+#Null Model的log形式的hazard function
 def LnStExpH(lbd, theta, b, t):
 	return np.log(lbd / np.power(t, theta) + b)
 
+#Null Model的log形式的survival function
 def LnStExpS(lbd, theta, b, t):
 	return -1 * lbd * np.power(t, 1-theta) / (1 - theta) - b * t
 
+#log形式的目标函数，目标函数为最大似然估计
 def LnObj(cd, ncd, lbd, theta, b):
 	obj = 0
 	for item in cd:
@@ -32,26 +35,33 @@ def LnObj(cd, ncd, lbd, theta, b):
 		obj += LnStExpS(lbd, theta, b, item) * ncd[item]
 	return obj
 
+#log形式的hazard function对lambda的偏导
 def DlnhDlbd(lbd, theta, b, t):
 	return 1.0 / (lbd + b * np.power(t, theta))
 
+#log形式的hazard function对theta的偏导
 def DlnhDtheta(lbd, theta, b, t):
 	return -1 * np.log(t) * lbd / (lbd + b * np.power(t, theta))
 
+#log形式的hazard function对b的偏导
 def DlnhDb(lbd, theta, b, t):
 	return 1 / (b + lbd * np.power(t, -1 * theta))
 
+#log形式的survival function对lambda的偏导
 def DlnsDlbd(lbd, theta, b, t):
 	return -1 * np.power(t, 1-theta) / (1 - theta)
 
+#log形式的survival function对theta的偏导
 def DlnsDtheta(lbd, theta, b, t):
 	up = lbd * np.power(t, 1-theta) * (1 - (1 - theta) * np.log(t))
 	down = -1 * (1 - theta) * (1 - theta)
 	return up / down
 
+#log形式的survival function对b的偏导
 def DlnsDb(lbd, theta, b, t):
 	return -1 * t
 
+#使用梯度下降法对参数进行优化
 def GradDes(cd, ncd, lbd, theta, b, lr1, lr2, lr3):
 	gradlbd = 0
 	gradtheta = 0
@@ -76,7 +86,7 @@ fr.close()
 #fr.close()
 #fr = open('../../../Bytedance/Data/aweme_churn_iet_100to500.text', 'r')
 #data.extend(fr.readlines())
-
+#统计真实数据中流失的用户（使用概率密度函数）和未流失的用户（使用survival function）
 cdic = {}
 ncdic = {}
 n = len(data)
@@ -93,10 +103,12 @@ for i in range(n):
 		else:
 			ncdic[int(temp[1])] = int(temp[2])
 cnt = 0
+#下面即为优化得到的一组理想参数
 lbd = -0.0885247
 theta = 0.0272774
 b = 0.08951
 lastObj = LnObj(cdic, ncdic, lbd, theta, b)
+#迭代优化参数
 while cnt < total:
 	lbd, theta, b = GradDes(cdic, ncdic, lbd, theta, b, alpha1, alpha2, alpha3)
 	newObj = LnObj(cdic, ncdic, lbd, theta, b)

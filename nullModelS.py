@@ -12,9 +12,11 @@ alpha3 = 1e-13
 total = 100000
 threshold = 0.00001
 
+#Null Model的hazard function，生成结果用
 def NullModelH(lbd, theta, b, t):
 	return lbd / np.power(t, theta) + b
 
+#Null Model的survival function，生成结果用
 def NullModelS(lbd, theta, b, t):
 	exp =  -1 * lbd * np.power(t, 1-theta) / (1 - theta) - b * t
 	return np.exp(exp)

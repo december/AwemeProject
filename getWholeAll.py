@@ -9,6 +9,7 @@ def WriteIt(info):
 	#return False
 	return True
 
+#统计每个用户整体的持续时间和流失情况，用于训练null model
 suffix = 'test'
 fr = open('/home/windxrz/toutiao/baseline/sample/sample_'+suffix+'.csv', 'r')
 data = fr.readlines()
@@ -34,7 +35,8 @@ for i in range(1, n):
 			ncdlist[time] += 1
 		else:
 			ncdlist[time] = 1
-	
+
+#输出统计结果	
 fw = open('../../dataset/aweme/aweme_whole_iet_'+suffix+'.text', 'w')
 keys = sorted(cdlist.keys())
 for k in keys:

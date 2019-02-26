@@ -9,6 +9,7 @@ def WriteIt(info):
 	#return False
 	return True
 
+#统计每个用户每段状态不变的持续时间和流失情况，用于训练累加模型、累乘模型和Social-Content Mixture Model
 suffix = 'train_half'
 fr = open('/home/windxrz/toutiao/baseline/sample/sample_'+suffix+'.csv', 'r')
 data = fr.readlines()
@@ -22,6 +23,7 @@ curtime = 0
 n = len(data)
 for i in range(1, n):
 	temp = data[i][:-1].split('\t')
+	#记录四种不同类型边的数量，作为当前的状态
 	info = temp[2] + '\t' + temp[3] + '\t' + temp[4] + '\t' + temp[5]
 	if lastid != temp[0]:
 		if curtime != 0 and lastinfo != '' and lastid != '' and WriteIt(lastinfo):
@@ -35,8 +37,10 @@ for i in range(1, n):
 		lastinfo = info
 		curtime = int(temp[1])
 	else:
+		#状态不变则加上登录的时间间隔
 		if lastinfo == info:
 			curtime += int(temp[1])
+		#状态发生变化，则从下一次登录开始重新计算
 		else:
 			if curtime != 0 and lastinfo != '' and lastid != '' and WriteIt(lastinfo):
 				if not ncdlist.has_key(lastinfo):
@@ -58,7 +62,8 @@ for i in range(1, n):
 		lastid = ''
 		lastinfo = ''
 		curtime = 0
-	
+
+#输出统计结果
 fw = open('../../dataset/aweme/aweme_status_iet_'+suffix+'.text', 'w')
 keys = sorted(cdlist.keys())
 for k in keys:

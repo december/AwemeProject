@@ -15,9 +15,11 @@ def LogNormal(x, u, s):
 	p /= np.exp((np.log(x) - u) ** 2 / 2 / (s ** 2))
 	return p
 
+#累乘模型的分子部分
 def Gx(k, x):
 	return np.power(x[0], k[0]) * np.power(x[1], k[1]) * np.power(x[2], k[2]) * np.power(x[3], k[3])
 
+#累乘模型的log形式的hazard function
 def LnScModelH(a, b, theta, k, x, t):
 	result = Gx(k, x)
 	lbd = a * result / np.power(t, theta) + b
@@ -26,11 +28,13 @@ def LnScModelH(a, b, theta, k, x, t):
 		print str(a) + ' ' + str(result) + ' ' + str(np.power(t, theta)) + ' ' + str(b)
 	return np.log(a * result / np.power(t, theta) + b)
 
+#累乘模型的log形式的survival function
 def LnScModelS(a, b, theta, k, x, t):
 	result = Gx(k, x)
 	exponent = -1 * a * result * np.power(t, 1 - theta) / (1 - theta) - b * t
 	return exponent
 
+#log形式的目标函数，目标函数为最大似然估计
 def LnObj(cd, ncd, p):
 	obj = 0
 	for item in cd:
@@ -46,14 +50,17 @@ def LnObj(cd, ncd, p):
 			obj += LnScModelS(p[0], p[1], p[2], p[3:], x, time) * ncd[item][time]
 	return obj
 
+#log形式的hazard function对a的偏导
 def DlnhDa(a, b, theta, k, x, t):
 	result = Gx(k, x)
 	return result / (a * result + np.power(t, theta) * b)
 
+#log形式的hazard function对b的偏导
 def DlnhDb(a, b, theta, k, x, t):
 	result = Gx(k, x)
 	return np.power(t, theta) / (a * result + b * np.power(t, theta))
 
+#log形式的hazard function对k的偏导
 def DlnhDk(a, b, theta, k, x, t):
 	result = list()
 	r = Gx(k, x) * a
@@ -63,17 +70,21 @@ def DlnhDk(a, b, theta, k, x, t):
 		result.append(up / down)
 	return result
 
+#log形式的hazard function对thetha的偏导
 def DlnhDtheta(a, b, theta, k, x, t):
 	result = Gx(k, x)
 	return -1 * a * result * np.log(t) / (a * result + b * np.power(t, theta))
 
+#log形式的survival function对a的偏导
 def DlnsDa(a, b, theta, k, x, t):
 	result = Gx(k, x)
 	return -1 * result * np.power(t, 1 - theta) / (1 - theta)
 
+#log形式的survival function对b的偏导
 def DlnsDb(a, b, theta, k, x, t):
 	return -1 * t
 
+#log形式的survival function对k的偏导
 def DlnsDk(a, b, theta, k, x, t):
 	result = list()
 	r = Gx(k, x) * a * np.power(t, 1 - theta) / (theta - 1)
@@ -81,12 +92,14 @@ def DlnsDk(a, b, theta, k, x, t):
 		result.append(r * np.log(x[i]))
 	return result
 
+#log形式的survival function对theta的偏导
 def DlnsDtheta(a, b, theta, k, x, t):
 	result = Gx(k, x)
 	r1 = a * result * np.power(t, 1 - theta) * np.log(t) / (1 - theta)
 	r2 = a * result * np.power(t, 1 - theta) / (1 - theta) / (1 - theta)
 	return r1 - r2
 
+#使用梯度下降法对参数进行优化
 def GradDes(cd, ncd, p, lr):
 	grad = list()
 	newp = list()
@@ -133,7 +146,7 @@ fr.close()
 fr = open('../../dataset/aweme/aweme_status_iet_train_half.text', 'r')
 data = fr.readlines()
 fr.close()
-
+#统计真实数据中流失的用户（使用概率密度函数）和未流失的用户（使用survival function）
 cdic = {} #info to time to popularity
 ncdic = {} #info to time to popularity
 n = len(data)
@@ -156,8 +169,10 @@ for i in range(n):
 			ncdic[info][int(temp[5])] = int(temp[6])		
 
 cnt = 0
+#下面即为优化得到的一组理想参数
 p = [0.009972980682277567, 0.0008647126751686381, 0.19911305778375524, -3.647380659689844, -11.096358533853275, -4.0620791083536005, -7.927938911654276] #a, b, theta, k1, k2, k3, k4
 lastObj = LnObj(cdic, ncdic, p)
+#迭代优化参数
 while cnt < total:
 	p = GradDes(cdic, ncdic, p, alpha)
 	newObj = LnObj(cdic, ncdic, p)

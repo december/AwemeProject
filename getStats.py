@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib as plt
 import datetime
 
+#统计样本数据中的用户数量与关系数量，包括不同类型的关系各自的数量
 enddate = datetime.datetime.strptime('20180826', '%Y%m%d')
 fr = open('../../dataset/aweme/aweme_active_iet_100to500.text', 'r')
 data = fr.readlines()
