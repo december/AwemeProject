@@ -29,7 +29,6 @@ for i in range(10):
     x.append([])
     y.append([])
 
-#获取不同social ratio用户群体的留存数据
 fr = open('../../../Bytedance/Data/retention_delta_cluster.csv', 'r')    
 info = fr.readlines()
 n = len(info)
@@ -48,7 +47,6 @@ for i in range(n):
     y[tp].append(num * 1.0 / cluster[tp])
 #print(y[1])
 
-#画图对比不同social ratio用户群体的留存情况
 x = np.array(x)
 y = np.array(y)
 plt.xlabel('Days', fontsize=14)
