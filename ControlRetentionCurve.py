@@ -3,9 +3,6 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import scipy as sp
 import numpy as np
-import seaborn as sns
-sns.set()
-sns.set_style('white')
 
 fr = open('../aweme_201801_active.text', 'r')
 info = fr.readlines()
